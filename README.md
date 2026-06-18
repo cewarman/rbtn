@@ -1,6 +1,6 @@
 # Project Name
 
-一句話介紹這個專案在做什麼。
+消除文字的歧異，為文字轉語音系統的前置工作。
 
 ## ✨ Features
 ## 📦 Installation
