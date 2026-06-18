@@ -1,0 +1,8 @@
+0	1	countinous_Number	<eps>
+0	1	Numerical_format_sequence	<eps>
+1	1	sp_or_tab	<eps>
+1	2	to	<eps>
+2	2	sp_or_tab	<eps>
+2	999	countinous_Number	R6
+2	999	Numerical_format_sequence	R6
+999

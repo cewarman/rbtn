@@ -1,0 +1,8 @@
+0	1	English_char	<eps>
+1	1	English_char	<eps>
+1	2	<eps>	<eps>
+2	2	sp_or_tab	<eps>
+2	3	Plus	<eps>
+3	3	sp_or_tab	<eps>
+3	999	countinous_Number R88
+999

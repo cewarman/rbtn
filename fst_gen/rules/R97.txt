@@ -1,0 +1,17 @@
+0	1	路	<eps>
+0	1	街	<eps>
+1	2	2	<eps>
+2	999	段	R97
+0	3	2	R97
+3	999	回戰	<eps>
+3	999	番戰	<eps>
+0	4	English_char	R97
+4	5	2	<eps>
+5	100	<LOOKAHEAD_NAE>	<eps>
+0	6	<LOOKBACK_NAN>	R97
+6	7	2	<eps>
+7	999	度燒傷	<eps>
+100	101	<LOOKAHEAD_NAN>	<eps>
+101	102	<LOOKAHEAD_IS_NOT_DOT>	<eps>
+102	999	<LOOKAHEAD_IS_NOT_COMMA>	<eps>
+999

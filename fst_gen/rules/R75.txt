@@ -1,0 +1,6 @@
+0	1	countinous_English_char	R75
+1	2	Dash	<eps>
+2	3	countinous_Number	<eps>
+3	4	<LOOKAHEAD_IS_NOT_PERCENTAGE>	<eps>
+4	999	<LOOKAHEAD_IS_NOT_SLASH>	<eps>
+999

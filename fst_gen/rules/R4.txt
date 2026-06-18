@@ -1,0 +1,13 @@
+0	1	local_name	<eps>
+0	1	animals_year	<eps>
+1	1	sp_or_tab	<eps>
+1	2	Vids_year	<eps>
+2	2	Number	<eps>
+2	999	<eps>	R4
+0	3	Vids_year	<eps>
+3	3	Number	<eps>
+3	4	<eps>	<eps>
+4	4	sp_or_tab	<eps>
+4	999	animals_year	R4
+4	999	local_name	R4
+999

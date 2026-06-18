@@ -1,0 +1,10 @@
+0	1	7-11	R69
+1	2	<eps>	<eps>
+1	2	<MEC_le_3>	<eps>
+2	999	Convenience_store_suffix	<eps>
+0	3	Convenience_store_prefix	R69
+3	4	<MEC_le_5>	<eps>
+3	4	<eps>	<eps>
+4	999	7-11	<eps>
+0	999	7-11	unknow_R69
+999

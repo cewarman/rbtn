@@ -1,0 +1,14 @@
+0	1	Numerical_prefix	<eps>
+0	1	individual_prefix	<eps>
+1	2	countinous_Number	<eps>
+0	2	countinous_Number	<eps>
+2	3	<eps>	<eps>
+2	3	Tmp_symF	<eps>
+2	999	Tmp_symF	R26
+3	3	sp_or_tab	<eps>
+3	4	Tilde	<eps>
+3	4	Dash	<eps>
+4	4	sp_or_tab	<eps>
+4	5	countinous_Number	<eps>
+5	999	Tmp_symF	R26
+999

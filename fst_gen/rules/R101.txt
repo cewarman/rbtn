@@ -1,0 +1,17 @@
+0	1	countinous_Number	<eps>
+1	2	°	R101
+2	999	<eps>	<eps>
+2	3	<eps>	<eps>
+3	3	sp_or_tab	<eps>
+3	4	countinous_Number	<eps>
+4	5	′	<eps>
+5	999	<eps>	<eps>
+5	6	<eps>	<eps>
+6	6	sp_or_tab	<eps>
+6	7	countinous_Number	<eps>
+7	8	″	<eps>
+8	999	<eps>	<eps>
+0	100	s	<eps>
+100	100	sp_or_tab	<eps>
+100	1	countinous_Number	<eps>
+999

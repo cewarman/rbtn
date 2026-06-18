@@ -1,0 +1,3 @@
+0	1	Roman_numerals	R18
+1	999	<eps>	<eps>
+999

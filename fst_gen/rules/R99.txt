@@ -1,0 +1,12 @@
+0	1	<LOOKBACK_NAE> <eps>
+1	2	u	<eps>
+2	3	Plus	<eps>
+3	4	Hex_Number	<eps>
+4	5	Hex_Number	<eps>
+5	6	Hex_Number	<eps>
+6	7	Hex_Number	<eps>
+7	8	Hex_Number	<eps>
+7	9	<LOOKAHEAD_NAN>	<eps>
+8	9	<LOOKAHEAD_NAN>	<eps>
+9	999	<LOOKAHEAD_NAE>	R99
+999

@@ -1,0 +1,10 @@
+0	1	Minute60	R106
+0	1	Number	R106
+1	2	Colon	<eps>
+2	3	countinous_Number_lower_than_60	<eps>
+3	4	<eps>	<eps>
+3	999	<eps>	<eps>
+4	4	sp_or_tab	<eps>
+4	5	Plus	<eps>
+5	999	countinous_Number	<eps>
+999

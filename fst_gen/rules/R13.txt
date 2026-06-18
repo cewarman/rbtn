@@ -1,0 +1,6 @@
+0	2	Number	<eps>
+0	1	Number	<eps>
+1	2	Number	<eps>
+2	4	Dot	<eps>
+4	999	<LOOKAHEAD_NAN>	R13
+999

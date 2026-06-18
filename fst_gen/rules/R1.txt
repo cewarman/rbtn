@@ -1,0 +1,10 @@
+0 999 Numerical_format_sequence R1
+0	151	Number	R1
+151	151	Number	<eps>
+151	152	Dot	<eps>
+152	153	Number	<eps>
+153	153	Number	<eps>
+153	154	<LOOKAHEAD_NAN>	<eps>
+154	155	<LOOKAHEAD_IS_NOT_年>	<eps>
+155	999	<LOOKAHEAD_IS_NOT_DOT>	<eps>
+999

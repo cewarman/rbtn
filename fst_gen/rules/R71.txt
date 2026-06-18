@@ -1,0 +1,9 @@
+0	1	fraction_fit_date_format	R71
+1	2	Slash	<eps>
+2	3	Vids_year	<eps>
+3	4	<LOOKAHEAD_NAN>	<eps>
+4	999	<LOOKAHEAD_IS_NOT_SLASH>	<eps>
+0	100	fraction_fit_date_format	R71
+100	101	<LOOKAHEAD_IS_NOT_SLASH>	<eps>
+101	999	<LOOKAHEAD_IS_NOT_DOT>	<eps>
+999

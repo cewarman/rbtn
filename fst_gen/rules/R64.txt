@@ -1,0 +1,14 @@
+0	1	Vids_year	R64
+1	1	sp_or_tab	<eps>
+1	2	dash	<eps>
+1	2	Tilde	<eps>
+2	2	sp_or_tab	<eps>
+2	3	two_Numbers	<eps>
+2	3	Vids_year	<eps>
+3	3	sp_or_tab	<eps>
+3	999	year_suffix	<eps>
+3	4	<MEC_le_3>	<eps>
+4	999	year_suffix	<eps>
+0	100	year_prefix	R64
+100	1	Vids_year	R64
+999

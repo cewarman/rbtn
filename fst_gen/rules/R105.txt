@@ -1,0 +1,8 @@
+0	1	countinous_English_char R105
+1	2	Dot	<eps>
+2	1	countinous_English_char	<eps>
+2	3	countinous_English_char	<eps>
+2	999	countinous_English_char	<eps>
+3	4	Plus	<eps>
+4	999	<LOOKAHEAD_NAE>	<eps>
+999

@@ -1,0 +1,14 @@
+0	1	Number	<eps>
+1	2	Comma	<eps>
+1	3	Number	<eps>
+2	4	Number	<eps>
+3	2	Comma	<eps>
+3	5	Number	<eps>
+4	6	Number	<eps>
+5	2	Comma	<eps>
+6	7	Number	<eps>
+7	2	Comma	<eps>
+7	8	<eps>	<eps>
+8	8	sp_or_tab	<eps>
+8	9	Unit	R25
+9

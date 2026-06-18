@@ -1,0 +1,3 @@
+0	1	countinous_mandarin_numerals	R23
+1	999	Percentage	<eps>
+999

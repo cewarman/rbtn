@@ -1,0 +1,5 @@
+0	1	<LOOKBACK_IS_NOT_SLASH>	R11
+1	2	<LOOKBACK_IS_NOT_DASH>	<eps>
+2	3	usually_fraction	<eps>
+3	999	<LOOKAHEAD_IS_NOT_SLASH>	<eps>
+999

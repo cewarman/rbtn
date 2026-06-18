@@ -1,0 +1,12 @@
+0	1	<LOOKBACK_NAN>	<eps>
+1	2	countinous_Number	<eps>
+2	2	sp_or_tab	<eps>
+2	3	^	<eps>
+3	3	sp_or_tab	<eps>
+3	4	countinous_Number	<eps>
+4	999	<LOOKAHEAD_NAN>	R111
+1	10	Minus	<eps>
+10	2	countinous_Number	<eps>
+3	20	Minus	<eps>
+20	4	countinous_Number	<eps>
+999

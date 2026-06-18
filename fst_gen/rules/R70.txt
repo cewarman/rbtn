@@ -1,0 +1,5 @@
+0	1	CH_Number_Abre	R70
+1	2	CH_Number_whitout_zero	<eps>
+1	2	Unit	<eps>
+2	999	<eps>	<eps>
+999

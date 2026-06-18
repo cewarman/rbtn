@@ -1,0 +1,5 @@
+0	1	<LOOKBACK_NAN>	<eps>
+1	2	countinous_Number_without_point_less_than_200	<eps>
+2	2	sp_or_tab	<eps>
+2	999	semi_Numerical_suffix	R96
+999

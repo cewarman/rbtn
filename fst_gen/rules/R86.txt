@@ -1,0 +1,11 @@
+0	1	date_prefix <eps>
+0	2	MonthSlashDayWithDayOfWeek <eps>
+1	2	MonthSlashDayWithDayOfWeek	<eps>
+2	3	<eps>	<eps>
+2	3	起	<eps>
+3	3	sp_or_tab	<eps>
+3	4	Dash	<eps>
+3	4	Tilde	<eps>
+4	4	sp_or_tab	<eps>
+4	999	MonthSlashDayWithDayOfWeek	R86
+999

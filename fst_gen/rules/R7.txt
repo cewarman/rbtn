@@ -1,0 +1,8 @@
+0	1	VidsDMY_Dot	<eps>
+0	1	VidsDMY_Dash	<eps>
+0	1	VidsDMY_Slash	<eps>
+0	1	RepublicDMY_Dot	<eps>
+0	1	RepublicDMY_Dash	<eps>
+0	1	RepublicDMY_Slash	<eps>
+1	999	<eps>	R7
+999

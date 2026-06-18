@@ -1,0 +1,7 @@
+0	1	<LOOKBACK_NAE>	R80
+1	2	i	<eps>
+2	3	Number_without_zero	<eps>
+3	3	Number	<eps>
+3	4	Dash	<eps>
+4	999	countinous_Number_without_point	<eps>
+999

@@ -1,0 +1,5 @@
+0	1	No.	<eps>
+0	1	Part.	<eps>
+0	1	Vol.	<eps>
+1	999	countinous_Number_without_point	R102
+999

@@ -1,0 +1,6 @@
+0	1	幾月幾日幾時幾分	R116
+1	1	sp_or_tab	<eps>
+1	2	Dash	<eps>
+2	2	sp_or_tab	<eps>
+2	999	幾月幾日幾時幾分	<eps>
+999

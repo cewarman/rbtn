@@ -1,0 +1,11 @@
+0	1	date_prefix	R21
+1	1	sp_or_tab	<eps>
+1	2	fraction_fit_date_format	<eps>
+1	2	(MD_Slash)	<eps>
+1	999	fraction_fit_date_format	<eps>
+1	999	(MD_Slash)	<eps>
+2	1	Ton	<eps>
+0	100	<LOOKBACK_IS_年>	R21
+100	1	的	<eps>
+100	1	<eps>	<eps>
+999

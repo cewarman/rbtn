@@ -1,0 +1,7 @@
+0 1 &# <eps>
+1 2 Number <eps>
+2 2 Number <eps>
+2 3 <eps> <eps>
+3 999 <eps> R52
+3 999 semicolon R52
+999

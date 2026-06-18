@@ -1,0 +1,12 @@
+0 1 dot_concatenate_number <eps>
+1 2 <eps> <eps>
+1 2 <MEC_le_5> <eps>
+2 2 sp_or_tab <eps>
+2 999 competition_parameter_suffix R58
+2 999 口徑 R58
+2 999 Bullet_specifications R58
+0 3 competition_parameter_prefix <eps>
+3 4 <eps> <eps>
+3 4 <MEC_le_5> <eps>
+4 999 dot_concatenate_number R58
+999

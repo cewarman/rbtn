@@ -1,0 +1,5 @@
+0	1	countinous_Number	R85
+1	2	Plus	<eps>
+2	2	sp_or_tab	<eps>
+2	999	plus_to_upper_suffix	<eps>
+999

@@ -1,0 +1,15 @@
+0	1	or_slash_prefix	R60
+1	1	sp_or_tab	<eps>
+1	2	Number	<eps>
+1	2	Number2T	<eps>
+1	2	Number3T	<eps>
+2	2	sp_or_tab	<eps>
+2	3	Slash	<eps>
+3	3	sp_or_tab	<eps>
+3	4	Number	<eps>
+3	4	Number2T	<eps>
+3	4	Number3T	<eps>
+4	4	sp_or_tab	<eps>
+4	999	天	<eps>
+4	999	<eps>	<eps>
+999

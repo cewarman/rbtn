@@ -1,0 +1,10 @@
+0	1	2	<eps>
+1	2	h	<eps>
+2	3	Plus	<eps>
+3	3	sp_or_tab	<eps>
+3	4	Plus	<eps>
+4	4	sp_or_tab	<eps>
+4	5	o	<eps>
+5	6	2	<eps>
+6	999	Minus	R103
+999

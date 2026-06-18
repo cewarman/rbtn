@@ -1,0 +1,7 @@
+0	1	ridiculous_Vids_year	R66
+1	999	year_suffix	<eps>
+0	2	CH_Number	R66
+2	3	Dot	<eps>
+3	4	CH_Number	<eps>
+4	999	<eps>	<eps>
+999

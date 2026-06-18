@@ -1,0 +1,8 @@
+0	1	<LOOKBACK_NAE>	R90
+1	2	English_char	<eps>
+2	2	English_char	<eps>
+2	3	Dash	<eps>
+3	4	Number	<eps>
+4	5	Plus	<eps>
+5	999	<LOOKBACK_NAN>	<eps>
+999

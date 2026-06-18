@@ -1,0 +1,7 @@
+0	1	E_human_name	R15
+1	2	sp_or_tab	<eps>
+2	2	sp_or_tab	<eps>
+2	3	E_roman_number_1_29	<eps>
+3	999	<LOOKAHEAD_NAE>	<eps>
+2	999	Roman_numerals	<eps>
+999

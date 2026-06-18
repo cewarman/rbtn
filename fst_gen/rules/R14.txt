@@ -1,0 +1,7 @@
+0	1	serial_number	R14
+1	1	sp_or_tab	<eps>
+1	2	countinous_Number_without_point	<eps>
+2	3	Dash	<eps>
+2	999	<LOOKAHEAD_NAN>	<eps>
+3	2	countinous_Number_without_point	<eps>
+999

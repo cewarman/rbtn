@@ -1,0 +1,17 @@
+0 1 滿 <eps>
+0 1 買 <eps>
+1 2 Number <eps>
+2 2 Number <eps>
+2 3 送 <eps>
+3 4 Number <eps>
+4 4 Number <eps>
+4 5 <eps> R34
+5
+0 6 投 <eps>
+6 7 countinous_Number <eps>
+7 8 中 <eps>
+8 5 countinous_Number R34
+0 9 從 <eps>
+9 10 countinous_Number <eps>
+10 11 變成 <eps>
+11 5 countinous_Number R34

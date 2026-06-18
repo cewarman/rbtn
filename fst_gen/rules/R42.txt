@@ -1,0 +1,9 @@
+0	1	Number12	<eps>
+1	2	Slash	<eps>
+2	3	Number31	<eps>
+3	3	sp_or_tab	<eps>
+3	4	Dash	<eps>
+3	4	Tilde	<eps>
+4	4	sp_or_tab	<eps>
+4	999	Number31	R42
+999

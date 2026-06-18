@@ -1,0 +1,15 @@
+0	1	Number	<eps>
+0	1	English_char <eps>
+1	1	Number	<eps>
+1	1	English_char	<eps>
+1	1	Under_Line	<eps>
+1	1	Dot	<eps>
+1	2	Commercial_At	<eps>
+2	3	English_char	<eps>
+2	3	Number	<eps>
+3	3	English_char	<eps>
+3	3	Number	<eps>
+3	3	Dot	<eps>
+3	3	Dash	<eps>
+3	4	<eps>	R38
+4

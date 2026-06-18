@@ -1,0 +1,9 @@
+0	1	<LOOKBACK_NAN>	R55
+1	2	24h	<eps>
+2	999	<LOOKAHEAD_NAE>	<eps>
+2	3	o	<eps>
+2	5	r	<eps>
+3	4	u	<eps>
+4	999	r	<eps>
+5	999	<LOOKAHEAD_NAE>	<eps>
+999

@@ -1,0 +1,11 @@
+0	1	Number_13_to_31	R8
+1	2	Slash	<eps>
+2	3	Number12	<eps>
+3	3	sp_or_tab	<eps>
+3	4	Tilde	<eps>
+3	4	Dash	<eps>
+4	4	sp_or_tab	<eps>
+4	5	Number_13_to_31	<eps>
+5	6	Slash	<eps>
+6	999	Number12	<eps>
+999

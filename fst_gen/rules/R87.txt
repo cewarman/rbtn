@@ -1,0 +1,15 @@
+0	1	date_prefix <eps>
+0	2	MonthSlashDayWithDayOfWeek <eps>
+1	2	MonthSlashDayWithDayOfWeek	<eps>
+2	3	<eps>	<eps>
+2	3	起	<eps>
+3	3	sp_or_tab	<eps>
+3	4	Dash	<eps>
+3	4	Tilde	<eps>
+4	4	sp_or_tab	<eps>
+4	5	Vids_year	<eps>
+5	6	Slash	<eps>
+6	7	Number12	<eps>
+6	999	Number12	R87
+7	999	月	R87
+999

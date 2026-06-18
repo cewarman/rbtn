@@ -1,0 +1,4 @@
+0   1   802.11  <eps>
+1   1   sp_or_tab   <eps>
+1   999   English_char    R44
+999

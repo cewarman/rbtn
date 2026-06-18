@@ -1,0 +1,7 @@
+0	1	countinous_Number_without_point_less_than_200	R108
+1	1	sp_or_tab	<eps>
+1	2	Dash	<eps>
+2	2	sp_or_tab	<eps>
+2	3	countinous_Number_without_point_less_than_200	<eps>
+3	999	competition_result	<eps>
+999

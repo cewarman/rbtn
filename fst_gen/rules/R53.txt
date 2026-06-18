@@ -1,0 +1,14 @@
+0	1	Hour24	<eps>
+1	2	Colon	<eps>
+2	3	Minute60	<eps>
+3	999	<LOOKAHEAD_NAN>	R53
+2	4	Minute60	<eps>
+4	4	sp_or_tab	<eps>
+4	999	分	R53
+0	20	time_prefix	R53
+20	20	sp_or_tab	<eps>
+20	21	Hour24	<eps>
+21	22	Colon	<eps>
+22	23	Minute60	<eps>
+23	999	<LOOKAHEAD_NAN>	<eps>
+999

@@ -1,0 +1,11 @@
+0	1	date_prefix	<eps>
+0	999	MonthSlashDayWithDayOfWeek	R41
+1	999	MonthSlashDayWithDayOfWeek	R41
+0	9	Number12	<eps>
+0	11	(MD_Slash)	<eps>
+9	10	Slash	<eps>
+10	11	Number31	<eps>
+11	12	<eps>	<eps>
+11	12	<MEC_le_2>	<eps>
+12	999	date_suffix	R41
+999

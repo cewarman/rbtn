@@ -1,0 +1,4 @@
+0	1	Roman_numerals	R68
+1	2	期	<eps>
+2	999	<eps>	<eps>
+999

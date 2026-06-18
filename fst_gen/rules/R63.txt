@@ -1,0 +1,9 @@
+0	1	English_char	R63
+1	1	English_char	<eps>
+1	2	Plus	<eps>
+2	2	Plus	<eps>
+2	999	<eps>	<eps>
+0	3	<LOOKBACK_NAE>	R63
+3	4	c	<eps>
+4	999	Number_Sign	<eps>
+999

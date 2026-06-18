@@ -1,0 +1,8 @@
+0	1	xx指標	R121
+1	1	sp_or_tab	<eps>
+1	2	>	<eps>
+2	2	sp_or_tab	<eps>
+2	3	countinous_Number	<eps>
+2	3	Numerical_format_sequence	<eps>
+3	999	<LOOKAHEAD_NAN>	<eps>
+999

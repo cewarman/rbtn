@@ -1,0 +1,9 @@
+0	1	individual_prefix	<eps>
+0	1	Numerical_prefix	<eps>
+0	1	<eps>	<eps>
+1	2	countinous_Number	<eps>
+2	2	sp_or_tab	<eps>
+2	3	分之	<eps>
+3	3	sp_or_tab	<eps>
+3	999	countinous_Number	R91
+999

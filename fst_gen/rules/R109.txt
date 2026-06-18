@@ -1,0 +1,4 @@
+0	1	FM	R109
+1	1	sp_or_tab	<eps>
+1	999	countinous_Number_less_than_200	<eps>
+999

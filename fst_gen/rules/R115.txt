@@ -1,0 +1,7 @@
+0	1	<LOOKBACK_IS_克>	R115
+1	2	Slash	<eps>
+2	999	毫升	<eps>
+0	10	<LOOKBACK_IS_元>	R115
+10	11	Slash	<eps>
+11	999	KWh	<eps>
+999

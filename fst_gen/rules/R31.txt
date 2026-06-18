@@ -1,0 +1,12 @@
+0	1	countinous_Number	R31
+1	1	sp_or_tab	<eps>
+1	2	Ton	<eps>
+2	2	sp_or_tab	<eps>
+2	3	countinous_Number	<eps>
+3	3	sp_or_tab	<eps>
+3	2	Ton	<eps>
+3	999	Unit	<eps>
+0	101	第	<eps>
+101	101	sp_or_tab	<eps>
+101	1	countinous_Number	R31
+999

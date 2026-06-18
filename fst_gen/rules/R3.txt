@@ -1,0 +1,9 @@
+0	1	English_char	R3
+1	1	sp_or_tab	<eps>
+1	2	Plus	<eps>
+2	2	sp_or_tab	<eps>
+2	999	English_char	<eps>
+0	100	covid-vaccine	R3
+100	100	sp_or_tab	<eps>
+100	999	Plus	<eps>
+999

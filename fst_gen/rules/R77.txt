@@ -1,0 +1,6 @@
+0	1	第	R77
+1	2	countinous_Number_without_point	<eps>
+2	999	期	<eps>
+0	100	countinous_Number_without_point	R77
+100	999	期	<eps>
+999

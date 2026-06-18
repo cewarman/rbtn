@@ -1,0 +1,6 @@
+0 1 countinous_Number_without1000_3000 <eps>
+1 1 sp_or_tab <eps>
+1 2 middle_word <eps>
+2 2 sp_or_tab <eps>
+2 999 countinous_Number_without1000_3000 R50
+999

@@ -1,0 +1,11 @@
+0	1	countinous_Number	R28
+1	1	sp_or_tab	<eps>
+1	2	UnitE	<eps>
+2	3	Slash	<eps>
+3	4	s	<eps>
+3	4	h	<eps>
+3	4	min	<eps>
+3	4	hr	<eps>
+4	999	<LOOKAHEAD_NAE>	<eps>
+2	999	<LOOKAHEAD_NAE>	<eps>
+999

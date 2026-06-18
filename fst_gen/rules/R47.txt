@@ -1,0 +1,7 @@
+0 1 stock_name <eps>
+1 1 sp_or_tab <eps>
+1 2 Number <eps>
+2 2 Number <eps>
+2 3 <LOOKAHEAD_IS_NOT_DOT> <eps>
+3 999 <LOOKAHEAD_NAN> R47
+999

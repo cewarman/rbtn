@@ -1,0 +1,6 @@
+0	1	signed_countinous_Number	R107
+1	2	^	<eps>
+2	3	{	<eps>
+3	4	signed_countinous_Number	<eps>
+4	999	}	<eps>
+999

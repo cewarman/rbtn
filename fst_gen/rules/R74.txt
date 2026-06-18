@@ -1,0 +1,4 @@
+0	1	8	R74
+1	2	8	<eps>
+2	999	festival_suffix	<eps>
+999
