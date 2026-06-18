@@ -1,9 +1,9 @@
-CC=gcc -O3
+CC=gcc -Ofast
 
 all: search_network RBTN
 	@echo -n
 RBTN: RBTN.o TNlib.o
-	gcc -O3 -o RBTN RBTN.o TNlib.o
+	gcc -Ofast -o RBTN RBTN.o TNlib.o
 clean:
 	rm -rf RBTN RBTN.o TNlib.o
 search_network:
