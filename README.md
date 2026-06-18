@@ -6,8 +6,9 @@
 &emsp;7/19是星期五  ->  七月十九號是星期五<br>
 &emsp;2/3的人不喜歡香菜  ->  三分之二的人不喜歡香菜<br>
 ## 📦 Installation
-請先安裝[OpenFst](https://www.openfst.org/twiki/bin/view/FST/WebHome)
+請先安裝[OpenFst](https://www.openfst.org/twiki/bin/view/FST/WebHome)後再make
 ## 🚀 Quick Start
+{content: ./RBTN rules_config.txt < fin.txt}
 ## 📊 Demo / Results
 ## 📁 Project Structure
 ## ⚙️ Configuration
