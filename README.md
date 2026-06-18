@@ -8,7 +8,9 @@
 ## 📦 Installation
 請先安裝[OpenFst](https://www.openfst.org/twiki/bin/view/FST/WebHome)後再make
 ## 🚀 Quick Start
-{content: ./RBTN rules_config.txt < fin.txt}
+```terminal
+./RBTN rules_config.txt < fin.txt
+```
 ## 📊 Demo / Results
 ## 📁 Project Structure
 ## ⚙️ Configuration
