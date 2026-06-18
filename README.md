@@ -1,5 +1,4 @@
-# Project Name
-規則法的文字正規化系統
+# Rule-based text normalization system
 
 ## ✨ Features
 消除文字的歧異，為文字轉語音系統的前置工作。<br>
