@@ -1,5 +1,6 @@
 ./fst_gen/rule_list.txt
 ./fst_gen/tools/bin/fst2network_h
+rule_list.txt
 CRR_Final.txt
 RBTN
 RBTN.o
