@@ -1,0 +1,818 @@
+#<NAN> = not a number
+#<NAE> = not a english
+#<NAM> = not a mandarin
+#<IAN> = is a number
+#<IAE> = is a english
+#<IAM> = is a mandarin
+
+~r substitution 256
+	~s "2" :"二" 4
+#		~t 第2<NAN>
+		~t <NAN>2月
+		~t <NAN>2日
+#		~t 之2<NAN>
+#	~s "2%" : "百分之二" 1
+#		~t <NAN>2%
+	~s "AT&T" : "A-T-and-T" 1
+		~t <NAE>AT&T<NAE>
+	~s "S&P 500" : "標普五百" 1
+		~t <NAE>S&P 500<NAN>
+	~s "S&P500" : "標普五百" 1
+		~t <NAE>S&P500<NAN>
+	~s ".com" : " dot com" 1
+		~t <IAE>.com<NAE>
+	~s ".tw" : " dot tw" 1
+		~t <IAE>.tw<NAE>
+	~s ".www" : " dot www" 1
+		~t <IAE>.www<NAE>
+	~s "TOEFL" : "toefl" 1
+		~t <NAE>TOEFL<NAE>
+	~s "7" : "seven " 2
+		~t <NAE>iPhone 7<NAN>
+		~t <NAE>Windows 7<NAN>
+	~s "8" : "eight " 2
+		~t <NAE>iPhone 8<NAN>
+		~t <NAE>Windows 8<NAN>
+	~s "10" : "ten " 2
+		~t <NAE>iPhone 10<NAN>
+		~t <NAE>Windows 10<NAN>
+	~s "X" : "ten " 1
+		~t <NAE>iPhone X
+#	~s "19" : "nighteen " 3
+#		~t <NAE>COVID-19<NAE>
+#		~t <NAE>Covid-19<NAE>
+#		~t <NAE>covid-19<NAE>
+	~s "+" : " plus " 3
+		~t <NAE>S9+<NAN>
+		~t <NAE>S10+<NAN>
+		~t <NAE>S20+<NAN>
+	~s "+" : "加" 1
+		~t <NAE>+
+	~s "＋" : "加" 1
+		~t ＋
+	~s "﹢" : "加" 1
+		~t ﹢
+	~s "50" : "五十" 1
+		~t 台灣50<NAN>
+	~s "500" : "五百" 2
+		~t 標普500<NAN>
+		~t 世界500強
+	~s "7-11" : "SEVEN ELEVEN " 1
+		~t <NAN>7-11<NAN>
+	~s "7-ELEVEN" : "SEVEN ELEVEN " 1
+		~t <NAN>7-ELEVEN<NAN>
+	~s "G7" : "G SEVEN " 1
+		~t <NAE>G7<NAN>
+	~s "1" : " ONE " 2
+		~t <NAE>B1<NAN>
+		~t <NAE>A1<NAN>
+	~s "B2B" : "Business to Business " 1
+		~t <NAN>B2B<NAN>
+	~s "C2C" : "Customer to Customer " 1
+		~t <NAN>C2C<NAN>
+	~s "B2C" : "Business to Customer " 1
+		~t <NAN>B2C<NAN>
+	~s "C2B" : "Customer to Business " 1
+		~t <NAN>C2B<NAN>
+	~s "O2O" : "Online to Offlines " 1
+		~t <NAN>O2O<NAN>
+#	~s "NVIDIA" : "nvidia" 1
+#		~t <NAE>NVIDIA<NAE>
+	~s "ft." : "featuring" 1
+		~t <NAE>ft.<NAE>
+	~s "007" : "零零七" 1
+		~t <NAN>007<NAN>
+	~s "×" : "乘" 1
+		~t ×
+	~s "=" : "等於" 1
+		~t =
+	~s "㏄" : "CC" 1
+		~t ㏄
+	~s "@" : "at " 1
+		~t @
+	~s "＠" : "at " 1
+		~t ＠
+	~s "﹫" : "at " 1
+		~t ﹫
+	~s "㎎" : "毫克" 1
+		~t ㎎
+	~s "㎏" : "公斤" 1
+		~t ㎏
+	~s "㎜" : "毫米" 1
+		~t ㎜
+	~s "㎝" : "公分" 1
+		~t ㎝
+	~s "㎞" : "公里" 1
+		~t ㎞
+	~s "㎡" : "平方公尺" 1
+		~t ㎡
+	~s "㏎" : "公里" 1
+		~t ㏎
+	~s "㏑" : "natural log " 1
+		~t ㏑
+	~s "㏒" : "log " 1
+		~t ㏒
+	~s "㏕" : "米爾" 1
+		~t ㏕
+	~s "Α" : "Alpha " 1
+		~t Α
+	~s "Β" : "Beta " 1
+		~t Β
+	~s "Γ" : "Gamma " 1
+		~t Γ
+	~s "Δ" : "Delta " 1
+		~t Δ
+	~s "Ε" : "Epsilon " 1
+		~t Ε
+	~s "Ζ" : "Zeta " 1
+		~t Ζ
+	~s "Η" : "Eta " 1
+		~t Η
+	~s "Θ" : "Theta " 1
+		~t Θ
+	~s "Ι" : "Iota " 1
+		~t Ι
+	~s "Κ" : "Kappa " 1
+		~t Κ
+	~s "Λ" : "Lambda " 1
+		~t Λ
+	~s "Μ" : "Mu " 1
+		~t Μ
+	~s "Ν" : "Nu " 1
+		~t Ν
+	~s "Ξ" : "Xi " 1
+		~t Ξ
+	~s "Ο" : "Omicron " 1
+		~t Ο
+	~s "Π" : "Pi " 1
+		~t Π
+	~s "Ρ" : "Rho " 1
+		~t Ρ
+	~s "Σ" : "Sigma " 1
+		~t Σ
+	~s "Τ" : "Tau " 1
+		~t Τ
+	~s "Υ" : "Upsilon " 1
+		~t Υ
+	~s "Φ" : "Phi " 1
+		~t Φ
+	~s "Χ" : "Chi " 1
+		~t Χ
+	~s "Ψ" : "Psi " 1
+		~t Ψ
+	~s "Ω" : "Omega " 1
+		~t Ω
+	~s "α" : "alpha " 1
+		~t α
+	~s "β" : "beta " 1
+		~t β
+	~s "γ" : "gamma " 1
+		~t γ
+	~s "δ" : "delta " 1
+		~t δ
+	~s "ε" : "epsilon " 1
+		~t ε
+	~s "ζ" : "zeta " 1
+		~t ζ
+	~s "η" : "eta " 1
+		~t η
+	~s "θ" : "theta " 1
+		~t θ
+	~s "ι" : "iota " 1
+		~t ι
+	~s "κ" : "kappa " 1
+		~t κ
+	~s "λ" : "lambda " 1
+		~t λ
+	~s "μ" : "mu " 1
+		~t μ
+	~s "ν" : "nu " 1
+		~t ν
+	~s "ξ" : "xi " 1
+		~t ξ
+	~s "ο" : "omicron " 1
+		~t ο
+	~s "π" : "pi " 1
+		~t π
+	~s "ρ" : "rho " 1
+		~t ρ
+	~s "σ" : "sigma " 1
+		~t σ
+	~s "τ" : "tau " 1
+		~t τ
+	~s "υ" : "upsilon " 1
+		~t υ
+	~s "φ" : "phi " 1
+		~t φ
+	~s "χ" : "chi " 1
+		~t χ
+	~s "ψ" : "psi " 1
+		~t ψ
+	~s "ω" : "omega " 1
+		~t ω
+	~s "瓩" : "千瓦" 1
+		~t 瓩
+	~s "á" : "a" 1
+		~t Taiwán
+	~s "SoC" : "S-o-C" 1
+		~t <NAE>SoC<NAE>
+	~s "〇" : "零" 1
+		~t 〇
+~e #end_of_substitution
+
+#****************************************************************************************************************#
+#NTISFW numerals_to_individually_spoken_form_word
+#DPTSFW decimal_point_to_spoken_form_word
+#NWMSFW numerals_with_measure_word_to_spoken_form_word(reserve measure unit)
+#N2SWND non-standard word to spoken-form word(numeriacl) with non digital input reserved
+#N2IWND non-standard word to spoken-form word(individual) with non digital input reserved
+#TADSRB replace dash and tilde symbols to '到'
+#NWDSFW numerals_with_date_word_to_spoken_form_word
+#FRACSFW fraction_to_spoken_form_word
+#PTSFW proportion_to_spoken_form_word
+#~k : transform rule for numerals
+#~p : prefix	language(1 for Mandarin, 2 for English) "string_token"
+#~f : suffix	language(1 for Mandarin, 2 for English) "string_token"
+#~v : replace set prefix
+#~m : replace pair	0/1_for_on_off	"raw"   : "replace"
+
+~r transformation 256
+	~c	R1	on	16	0	#3,333、10.5、3,333.5	數值唸法
+		~k	DPTSFW
+
+	~c	R2	on	16	32	#money mark $100
+		~k	MMTDSF
+
+	~c	R3	on	1	7	#英文字母+英文字母、 covid-vaccine+ i.e. A+B -> A加B、 AZ+->AZ加
+		~k	NULL
+		~v 4
+			~m	1	"+"    : "加"
+			~m	1	"＋"    : "加"
+			~m	1	"﹢"    : "加"
+
+	~c	R4	on	6	10	#年份 e.g. 2004鼠年,2008龜山
+		~k	N2SSTF
+
+	~c	R5	on	16	13	#1992/09～1995/06
+		~k	YMTYMT
+
+	~c	R6	on	16	0	#9to5
+		~k	NESWND
+
+	~c	R7	on	6	10	#日月年
+		~k	DMYTSF
+
+	~c	R8	on	6	7	#日/月-日/月 i.e. 21/02-28/03 古今天外（第五季）
+		~k	DMTODM
+
+	~c	R9	on	6	10	#年月日
+		~k	DTDYMD
+
+	~c	R10	on	6	10	#西元月年
+		~k	DMYTSF
+	
+	~c	R11	on	6	7	#分數,分子分母都大於13  i.e. 13/29
+		~k	FSFWTF
+	
+	~c	R12	on	16	7	#西元年念法 2008/11
+		~k	YMTSFW
+	
+	~c	R12_subspecies	on	16	7	#西元年念法 2021/22
+		~k	N2SSTF_LD
+	
+	~c	R13	on	16	4	#3.	數字發音
+		~k	DPTSFW
+#		~p	1	"第"
+#		~f	1	"，"
+	
+	~c	R14	on	6	1	#serial number i.e. ISBN 978-4-592-14517-2 2013年12月23日 EAN 471-7702-25832-0
+		~k	N2IWND
+
+	~c	R15	on	16	10	#Elizabeth vii
+		~k	PRNTPG
+	
+	~c	R16	on	6	1	#三位數:三位數、三位數:二位數、二位數:三位數、二位數（25以上）:二位數	幾比幾
+		~k	RSFSTF
+
+	~c	R17	on	3	1	#14位數值以上	數字發音
+		~k	NTISFW
+	
+	~c	R18	on	4	1	#羅馬數字轉英文 ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩⅪⅫⅬⅭⅮⅯⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹⅺⅻⅼⅽⅾⅿ
+		~k	RACTEA
+	
+	~c	R19	on	16	10	#37℃	攝氏
+		~k	DPWAID
+		~p	1 "攝氏"
+		~f	1	"度"
+	
+	~c	R20	on	16	10	#numeral~numeral
+		~k	NULL
+		~v 4
+			~m	1	"~"    : "到"
+			~m	1	"～"   : "到"
+	
+	~c	R21	on	6	10	#在2/26、3/4、3/9這幾個交易日
+		~k	DSPFWW
+	
+	~c	R22	on	16	0	#第number
+		~k	N2SWND
+		~v 7
+			~m	1	"~"    : "到"
+			~m	1	"～"    : "到"
+			~m	1	"-"    : "到"
+			~m	1	"－"    : "到"
+			~m	1	"–"    : "到"
+			~m	1	"—"    : "到"
+			~m	1	"−"    : "到"
+	~c	R23	on	1	4	#四○・八、五・一、五・八％
+		~k	CMNTSW
+		~v 3
+			~m	1	"%"		:	"趴"
+			~m	1	"％"	:	"趴"
+			~m	1	"﹪"		:	"趴"
+	
+	~c	R24	on	6	0	#1000+單位	數值唸法
+		~k	NWMSFW
+	
+	~c	R25	on	6	0	#1,000+單位	數值唸法
+		~k	NWMSFW
+	
+	~c	R26	on	16	10	#37℉	華氏
+		~k	DPWAID
+		~p	1 "華氏"
+		~f	1	"度"
+	
+	~c	R27	on	16	10	#":"章節 i.e 約翰一書2:2；哥林多後書5:21；羅馬書3:23-26
+		~k	N2SCAC
+	
+	~c	R28	on	6	100	#1000+英文單位	數值唸法
+		~k	NWMSFW
+		~v 100
+			~m	0	"V"    : "伏特"
+			~m	0	"A"    : "安培"
+			~m	0	"hp"   : "匹馬力"
+			~m	0	"g"    : "公克"
+			~m	0	"kg"   : "公斤"
+			~m	1	"Hz"   : " Hertz"
+			~m	1	"GHz"   : " giga Hertz"
+			~m	1	"MHz"  : " mega Hertz"
+			~m	1	"km"   : "公里"
+			~m	0	"cm"   : "公分"
+			~m	1	"mm"   : "毫米"
+			~m	1	"nm"   : "奈米"
+			~m	1	"Gbps" : " giga bits per second"
+			~m	1	"C.C." : "毫升"
+			~m	1	"㏄"   : "毫升"
+			~m	1	"/s"    : "每秒"
+			~m	1	"/min"    : "每分"
+			~m	1	"/h"    : "每小時"
+			~m	1	"/hr"    : "每小時"
+			~m	1	"/L"    : "每升"
+		
+	~c	R29	on	6	100	#1,000+英文單位	數值唸法
+		~k	N2SWND
+		~v 100
+			~m	0	"V"    : "伏特"
+			~m	0	"A"    : "安培"
+			~m	0	"hp"   : "匹馬力"
+			~m	0	"g"    : "公克"
+			~m	0	"kg"   : "公斤"
+			~m	1	"Hz"   : " Hertz"
+			~m	1	"MHz"  : " mega Hertz"
+			~m	1	"km"   : "公里"
+			~m	0	"cm"   : "公分"
+			~m	1	"mm"   : "毫米"
+			~m	1	"nm"   : "奈米"
+			~m	1	"Gbps" : " giga bits per second"
+			~m	1	"C.C." : "毫升"
+			~m	1	"㏄"   : "毫升"
+			~m	1	"/"    : "每"
+	
+	~c	R30	on	16	1	#昨（31）日	數值唸法
+		~k	N2SWND
+	
+	~c	R31	on	16	0	#1、2+單位	數值唸法
+		~k	N2SWND_FT
+	
+	~c	R32	on	6	0	#1~2+單位，1-2+單位	到，數值唸法
+		~k	TADSRB
+	
+	~c	R33	on	8	0	#http//www.yuanzaicoin.com	網址結構
+		~k	URLNOR
+	
+	~c	R34	on	16	0	#滿5000送500、投11中6	數值唸法
+		~k	N2SWND
+	
+	~c	R35	on	16	10	#(02)2349-4666	數字唸法
+		~k	N2IWND
+		~v 6
+			~m	1	"#"		: "轉分機"
+			~m	1	"＃"	: "轉分機"
+			~m	1	"﹟"	: "轉分機"
+			~m	1	"+"    : "加"
+			~m	1	"＋"    : "加"
+			~m	1	"﹢"    : "加"
+
+	~c	R36	on	16	10	#9月16到17日	日期數值唸法
+		~k	YMOMDT
+
+	~c	R37	on	16	0	#傳真:數字、代碼：數字	數字唸法
+		~k	N2IWND
+	
+	~c	R38	on	8	0	#e-mail
+		~k	EMAILN
+
+	~c	R39	on	16	0	#covid-19 , number percent , TOP5->TOP five
+		~k	NESWND
+	
+	~c	R40	on	6	0	#07/19~07/28
+		~k	MDTOMD
+	
+	~c	R41	on	6	0	#03/22(二)
+		~k	MDWNDI
+	
+	~c	R42	on	6	0	#03/21～25
+		~k	MDTOMD
+	
+	~c	R43	on	6	0	#10:00～18:00
+		~k	HMTOHM
+
+	~c	R44	on	6	0	#802.11ac
+		~k	COMPRO
+	
+	~c	R45	on	6	10	#plus sign and minus sing Symmetry, i.e. +、- , ++/--, 2,000萬元-1,200萬元-6萬元-2.85萬元
+		~k	NULL
+		~v 8
+			~m	1	"+"    : "加"
+			~m	1	"＋"    : "加"
+			~m	1	"﹢"    : "加"
+			~m	1	"-"    : "減"
+			~m	1	"－"    : "減"
+			~m	1	"–"    : "減"
+			~m	1	"—"    : "減"
+			~m	1	"−"    : "減"
+	
+	~c	R46	on	16	0	#台88線、F-16戰機 數值念法(雜)
+		~k	N2SWND
+		~v 3
+			~m	1	"~"	: "到"
+			~m	1	"～"	: "到"
+	
+	~c	R47	on	6	0	#滬深300指數、史坦普500
+		~k	SFWFSC
+	
+	~c	R48	on	16	5	#案18590和案18397互相不認識
+		~k	NFNLT4
+		
+	
+	~c	R49	on	6	0	#3：0完封、0：3落敗
+		~k	RSFWTF
+	
+	~c	R50	on	16	0	#4比6、3缺1、2選1
+		~k	N2SWND
+		~v 5
+			~m	1	"ｘ"	: "乘"
+			~m	1	"Ｘ"	: "乘"
+			~m	1	"x"		: "乘"
+			~m	1	"X"		: "乘"
+			~m	1	"×"		: "乘"
+	
+	~c	R51	on	6	0	#分數念法 1/2學分
+		~k	FSFWTF
+	
+	~c	R52	on	1	7	#&#10003; decimal html code
+		~k	HICTU8
+	
+	~c	R53	on	6	0	#22:00
+		~k	HMTSFW
+	
+	~c	R54	on	16	1	#單獨一數字
+		~k	N2IWND
+	
+	~c	unknow_R54	on	16	10	#55688 、 831 、 711
+		~k	NSFWSP
+	
+	~c	R55	on	0	16	#24h
+		~k	TTFHSF
+	
+	~c	R56	on	16	0	#iphone 11(限制念中文發音)
+		~k	CH_N2SWND
+	
+	~c	R57	on	16	0	#'engchar' '+' 'num'  ie. BD+34 -> BD plus 三四
+		~k	N2IWND
+		~v 7
+			~m	1	"+"    : " plus"
+			~m	1	"＋"    : " plus"
+			~m	1	"﹢"    : " plus"
+
+	~c	R58	on	3	1	#.364的打擊率->點三六四的打擊率  銀色.50口徑Mark XIX型，命名為“.50 GS”，
+		~k	DCSOIN
+	
+	~c	R59	on	30	0	#26th->twenty-sixth
+		~k	CONAFF
+	
+	~c	R60	on	16	10	#slash -> or, i.e.熟成55/75天的
+		~k	N2SWND
+		~v 4
+			~m	1	"/"		:	"或"
+			~m	1	"／"	:	"或"
+			~m	1	"∕"		:	"或"
+			~m	1	"╱"		:	"或"
+
+	~c	R61	on	16	10	#2+2, 2x4米, 7x24小時
+		~k	CMFSFW
+	
+	~c	R62	on	1	8	#& -> and
+		~k	CASSWA
+
+	~c	R63	on	6	8	#SmartTag+ 、C# 、Disney+ -> Disney plus
+		~k	ECCWPS
+
+	~c	R64	on	4	8	#2018-19賽季
+		~k	ABOYTY
+
+	~c	R65	on	4	8	#PER值計算公式為：（得分+籃板+助攻+搶斷+蓋帽）-（出手次數-命中次數）-（罰球次數-罰球命中次數）-失誤次數/球員上場比賽的場次。
+		~k	GFGCAS
+
+	~c	R66	on	4	0	# 英文字母"O"->"零" i.e.2O2O年
+		~k	RUOEAO
+
+	~c	R67	on	4	16	# ?te -> why-te, 9M88, M.2, CO2
+		~k	TPEFRU
+
+	~c	R68	on	4	16	# Ⅰ期 -> 一期, Ⅱ期 -> 二期
+		~k	RUTMSF
+
+	~c	R69	on	16	16	# 711、7-11 -> seven-eleven
+		~k	TN77SE
+
+	~c	unknow_R69	on	4	1	# 7-11 -> 七一一
+		~k	TN77SE
+
+	~c	R70	on	2	0	# 廿->二十、 卅->三十、 卌->四十
+		~k	NULL
+		~v 3
+			~m	1	"廿"	:	"二十"
+			~m	1	"卅"	:	"三十"
+			~m	1	"卌"	:	"四十"
+
+	~c	R71	on	6	10	#日期 分數 難以區分MMDD[YYYY], i.e. 7/20、 8/5、 05/21/2013
+		~k	FFDFCD
+
+	~c	R72	on	6	10	#year_prefix+(year-year), i.e. 計劃（2023-2027）
+		~k	ABOYTY
+
+	~c	R73	on	16	1	#model_prefix+model_name, i.e. 包括 A2640、A2643 和 A2645 ; P2P、B2C
+		~k	N2SSTF_LD
+		~v 3
+			~m	1	"+"    : " plus"
+			~m	1	"＋"    : " plus"
+			~m	1	"﹢"    : " plus"
+	~c	R74	on	4	1	#numerals+festival, i.e. 包括 99重陽節
+		~k	N2IWND
+
+	~c	R75	on	16	1	#English+"-"+number, i.e. AIM-120
+		~k	N2SSTF_LD
+
+	~c	R76	on	16	1	#English+("."+number)*N,N>=1, i.e. M.2、B.1.621
+		~k	EDNMNT
+
+	~c	R77	on	16	1	#[第]+numerals+期, i.e. 第110065期、3期
+		~k	NINB4I
+
+	~c	R78	on	16	1	#數學符號, i.e. ≠、≤、≥、÷
+		~k	MSTSFW
+
+	~c	R79	on	16	32	#百分比統整3% -10% 12~18% 降低15%
+		~k	UAPPUN
+
+	~c	R80	on	16	1	#型號 ex: i9-12900
+		~k	NNLIRW
+
+	~c	R81	on	16	1	#iPhone 8+、 S20+
+		~k	N2SWND
+		~v 7
+			~m	1	"+"    : "plus"
+			~m	1	"＋"    : "plus"
+			~m	1	"﹢"    : "plus"
+
+	~c	R82	on	16	1	#波音737-800型客機
+		~k	NILNRW
+		
+
+	~c	R83	on	16	10	#開價35~40萬/坪
+		~k	MYSHUT
+		
+		
+	~c R84 on	16	10	#可以參考書中P134～P136寫的
+		~k RWPOST
+		#~p	2 "pages "
+		#~f	1	"頁"
+
+	~c R85 on	16	10	#有4000+建案成交
+		~k N2SWND
+		~v 6
+			~m	1	"+"    : "以上"
+			~m	1	"＋"    : "以上"
+			~m	1	"﹢"    : "以上"
+
+	~c R86 on	16	10	#9/17(三)~9/19(5)
+		~k MSDWDW
+
+	~c R87 on	16	10	#8/15(2)起~2023/11
+		~k MDD2YM
+
+	~c R88 on	16	10	#T+0
+		~k N2SWND
+		~v 6
+			~m	1	"+"    : "加"
+			~m	1	"＋"    : "加"
+			~m	1	"﹢"    : "加"
+
+	~c R89 on	16	10	#IC+IT
+		~k NULL
+
+	~c R90 on	16	10	#A-1+
+		~k NESWND
+		~v 8
+			~m	1	"+"    : "plus "
+			~m	1	"＋"    : "plus "
+			~m	1	"﹢"    : "plus "
+			~m	1	"-"    : ""
+			~m	1	"－"    : ""
+			~m	1	"–"    : ""
+			~m	1	"—"    : ""
+			~m	1	"−"    : ""
+
+	~c R91 on	16	10	#2分之1
+		~k N2SWND
+
+	~c R92 on 4	10	#XA～XS、即日起-5/16(一)可參加報名， 10月13至11月26日
+		~k	N2SWND
+		~v 7
+			~m	1	"~"    : "到"
+			~m	1	"～"    : "到"
+			~m	1	"-"    : "到"
+			~m	1	"－"    : "到"
+			~m	1	"–"    : "到"
+			~m	1	"—"    : "到"
+			~m	1	"−"    : "到"
+
+	~c R93 on 16	10	# iOS 16.0.3
+		~k	VMPNDN
+
+	~c R94 on 16	10	# 時間帶秒 i.e.17:53:28
+		~k	THCMCS
+
+	~c	R95	on	16	32	#千分比統整3‰ -10‰ 12~18‰ 降低15‰
+		~k	UAPPMU
+
+	~c	R96	on	16	10	#semi_Numerical_suffix, i.e. 2024對賴清德、17對情侶
+		~k	SEMINS
+	
+	~c R97 on	16	0	#路2段(雜) 2番戰
+		~k	N2IWND
+		
+	~c R98 on	16	0	#IP address 192.168.50.69
+		~k	N2IWND
+		~v 13
+			~m	1	"."    : "點"
+			~m	1	"．"    : "點"
+			~m	1	"‧"    : "點"
+			~m	1	"~"    : "到"
+			~m	1	"～"    : "到"
+			~m	1	"-"    : "到"
+			~m	1	"－"    : "到"
+			~m	1	"–"    : "到"
+			~m	1	"—"    : "到"
+			~m	1	"−"    : "到"
+
+	~c R99 on	16	0	#U+2030(unicode number)
+		~k	N2IWND
+
+	~c R100 on	16	0	#E-BD2/3、E-BG2/3
+		~k	N2SWND
+
+	~c R101 on	16	0	#60°26′10″N 134°15′02″W
+		~k	MASAFW
+
+	~c R102 on	16	0	#No.1 Part.1 vol.1
+		~k	EAWWON
+
+	~c R103 on	16	0	#2H+ + O2− → H2O
+		~k	CFTSFW
+
+	~c R104 on	16	0	#2009-2010 10001-11000
+		~k	RWAPAS
+
+	~c R105 on	16	0	#filler annoying English char  CHEM.is.TRY、H.Spectrum+
+		~k	NULL
+		~v 3
+			~m	1	"+"    : " plus"
+			~m	1	"＋"    : " plus"
+			~m	1	"﹢"    : " plus"
+
+	~c R106 on	16	0	#比賽成績 i.e. 2:13.51 +7.28
+		~k	CRTSFW
+
+	~c R107 on	16	0	#Latex i.e. 10^{-24}
+		~k	LATEXT
+
+	~c R108 on	16	0	#competition_result i.e. 意大利隊以2-1取得勝利
+		~k	CH_N2SWND
+		~v 5
+			~m	1	"-"    : "比"
+			~m	1	"－"    : "比"
+			~m	1	"–"    : "比"
+			~m	1	"—"    : "比"
+			~m	1	"−"    : "比"
+
+	~c R109 on	16	0	#廣播電台 i.e. FM98.7
+		~k	N2IWND
+		~v 3
+			~m	1	"."    : "點"
+			~m	1	"．"    : "點"
+			~m	1	"‧"    : "點"
+
+	~c R110 on	16	0	#個別發音的範圍 i.e. 車次總範圍為6001-7598，其中：. （車次爲6001-7598）
+		~k	RSFSTF
+		~v 7
+			~m	1	"~"    : "到"
+			~m	1	"～"    : "到"
+			~m	1	"-"    : "到"
+			~m	1	"－"    : "到"
+			~m	1	"–"    : "到"
+			~m	1	"—"    : "到"
+			~m	1	"−"    : "到"
+
+	~c R111 on	16	0	#'^'當作次方 3^2=9 10^2 -5^2 10^0.5 1.5^8 2^2.71828
+		~k	HSAESF
+
+	~c R112 on	16	0	#列舉 i.e. 分別為「1、4、13、17、34、39」
+		~k	N2SWND
+		~v 3
+			~m	1	"+"    : " plus"
+			~m	1	"＋"    : " plus"
+			~m	1	"﹢"    : " plus"
+
+	~c R113 on	16	0	#法規 i.e. 第23條、23-1條規定辦理的兩年回訓一次制度
+		~k	DAFROL
+
+	~c R114 on	16	0	#門牌號 i.e. 台北市文山區萬隆街47-12號 區塊開發3-2期
+		~k	N2SWND
+		~v 5
+			~m	1	"-"    : "之"
+			~m	1	"－"    : "之"
+			~m	1	"–"    : "之"
+			~m	1	"—"    : "之"
+			~m	1	"−"    : "之"
+
+	~c R115 on	16	0	#'/' -> '每' i.e.微克/毫升
+		~k	NULL
+		~v 4
+			~m	1	"/"		:	"每"
+			~m	1	"／"	:	"每"
+			~m	1	"∕"		:	"每"
+			~m	1	"╱"		:	"每"
+
+	~c R116 on	16	0	#幾月幾日幾時幾分-幾月幾日幾時幾分
+		~k	MDHMTO
+
+	~c R117 on	16	0	#幾分幾秒 i.e. 18:11：、41:08：
+		~k	THMSSF
+
+	~c R118 on	16	0	#Numerical_format-Numerical_format i.e. 3,500-3,667
+		~k	NFSNFS
+
+	~c R119 on	16	0	#numerical for Numerals less than 3 times ; shortest first for others
+		~k	NFNLT3
+
+	~c R120 on	16	0	#Plus->正、Minus->負
+		~k	N2SWND
+		~v 8
+			~m	1	"+"    : "正"
+			~m	1	"＋"    : "正"
+			~m	1	"﹢"    : "正"
+			~m	1	"-"    : "負"
+			~m	1	"－"    : "負"
+			~m	1	"–"    : "負"
+			~m	1	"—"    : "負"
+			~m	1	"−"    : "負"
+
+	~c R121 on	16	0	#">" -> "大於"
+		~k	N2SWND
+		~v 3
+			~m	1	">"    : "大於"
+			~m	1	"＞"    : "大於"
+			~m	1	"﹥"    : "大於"
+
+	~c R122 on	16	0	#2,000萬元-1,200萬元-6萬元-2.85萬元
+		~k	NUDLOP
+
+	~c R123 on	4	0	#三○○億元、二○二二年度
+		~k	CNWAAN
+
+	~c R124 on	4	0	#0開頭英文字母結尾 i.e. 他列00981A僅漲0.71％ 網酸
+		~k N2IWND
+	
+~e #end_of_transformation
