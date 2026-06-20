@@ -2,6 +2,13 @@
 #include "TNlib.h"
 #include <time.h>
 
+//gcc -Ofast -shared -fPIC -o pypiRBTN.so RBTN.c TNlib.c
+FST pypifst;
+RULES pypirul;
+FLAGS pypiflags;
+
+void pypiloadrules(char *rules_config_path);
+void pypiconversion(char **intext, char *output);
 void run(FILE *frul, /* FILE *flpe,*/ FILE *fin, FILE *fout, FILE *fnswm);
 void convservation(FST *fst, TEXT *text_in, TEXT *text_out, FLAGS *flags, TRANSFORMATION *tra, FILE *fnswm);
 void output_non_standard_word_marks(FILE *fnswm, char *line, NSW_TOKEN *nsw);
@@ -588,4 +595,55 @@ void output_non_standard_word_marks(FILE *fnswm, char *line, NSW_TOKEN *nsw)
 		}
 		fprintf(fnswm, "\t%d∥\t%d∥\t%d∥\t%s∥\t%s∥\t%d∥\t%s\n", i + 1, start_idx_utf8_form, end_idx_utf8_form, nsw->token[i], nsw->rule[i], nsw->language[i], nsw->SFW[i]);
 	}
+}
+void pypiloadrules(char *rules_config_path){
+	FILE *frul;
+
+	if (!(frul = fopen(rules_config_path, "r")))
+	{
+		printf("can not open rules_config\n");
+		exit(1);
+	}
+	
+	set_fst(&pypifst);
+	load_rules(frul, &pypirul);
+}
+void pypiconversion(char **intext, char *output){
+	TEXT text_in, text_tmp, text_out;
+	int i, num_line = 0;
+	
+	for(i=0; intext[i][0]!='\0'; i++)
+	{
+		//printf("%s\n",intext[i]);
+		num_line++;
+	}
+	text_in.num_of_sentence = num_line;
+	text_in.sentence = (char **)malloc(text_in.num_of_sentence * sizeof(char *));
+
+	for(i=0; intext[i][0]!='\0'; i++)
+	{
+		text_in.sentence[i] = (char *)malloc((strlen(intext[i]) + 1) * sizeof(char));
+		strcpy(text_in.sentence[i], intext[i]);
+	}
+
+	convservation(&pypifst, &text_in, &text_tmp, &pypiflags, &(pypirul.tra), NULL);
+	//return;
+	substitute(&text_tmp, &text_out, &(pypirul.sub));
+
+	//for (i = 0; i < text_out.num_of_sentence; i++)
+	//{
+	//	fprintf(stdout, "%s\n", text_out.sentence[i]);
+	//}
+
+	output[0] = '\0';
+    for(i = 0; i < text_out.num_of_sentence; i++)
+    {
+        strcat(output, text_out.sentence[i]);
+        //strcat(output, "\n");
+    }
+
+
+	destroy_text(&text_in);
+	destroy_text(&text_tmp);
+	destroy_text(&text_out);
 }

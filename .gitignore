@@ -5,4 +5,8 @@ RBTN
 RBTN.o
 TNlib.o
 network.h
+rbtn
+update.txt
+venv
+testing.py
 
