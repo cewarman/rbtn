@@ -9,4 +9,8 @@ rbtn
 update.txt
 venv
 testing.py
-
+fst_gen/binary
+fst_gen/symlist
+fst_gen/temp
+pypiRBTN.so
+non_standard_word_marks.txt

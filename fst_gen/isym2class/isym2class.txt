@@ -1545,6 +1545,7 @@
 0	0	新台幣	fraction_suffix
 0	0	英吋	fraction_suffix
 0	0	住戶	fraction_suffix
+0	0	的人	fraction_suffix
 0	0	滿級分	strict_fraction_suffix
 0	0	學年	strict_fraction_suffix
 0	0	小	小
