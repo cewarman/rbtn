@@ -7,7 +7,7 @@ FST pypifst;
 RULES pypirul;
 FLAGS pypiflags;
 
-void pypiloadrules(char *rules_config_path);
+void pypiloadrules(char *rules_config_path, char *fst_path);
 void pypiconversion(char **intext, char *output);
 void run(FILE *frul, /* FILE *flpe,*/ FILE *fin, FILE *fout, FILE *fnswm);
 void convservation(FST *fst, TEXT *text_in, TEXT *text_out, FLAGS *flags, TRANSFORMATION *tra, FILE *fnswm);
@@ -81,11 +81,20 @@ void run(FILE *frul, /* FILE *flpe,*/ FILE *fin, FILE *fout, FILE *fnswm)
 	TEXT text_in, text_tmp, text_out;
 	RULES rul;
 	FLAGS flags;
+	FILE *ffst;
 	int i, j, k;
 
 	srand(time(NULL));
 
-	set_fst(&fst);
+	if (!(ffst = fopen("CRR_Final.txt", "r")))
+	{
+		printf("can not open search_network\n");
+		exit(1);
+	}
+
+	//set_fst(&fst);
+	readfst(&fst, ffst);
+	fclose(ffst);
 	// return;
 	/*for (int i = 0, len = fst.num_state; i < len; i++){
 		  for (int j = 0; j < fst.num_possible_forward[i]; j++){
@@ -596,17 +605,26 @@ void output_non_standard_word_marks(FILE *fnswm, char *line, NSW_TOKEN *nsw)
 		fprintf(fnswm, "\t%d∥\t%d∥\t%d∥\t%s∥\t%s∥\t%d∥\t%s\n", i + 1, start_idx_utf8_form, end_idx_utf8_form, nsw->token[i], nsw->rule[i], nsw->language[i], nsw->SFW[i]);
 	}
 }
-void pypiloadrules(char *rules_config_path){
-	FILE *frul;
+void pypiloadrules(char *rules_config_path, char *fst_path){
+	FILE *frul, *ffst;
 
 	if (!(frul = fopen(rules_config_path, "r")))
 	{
 		printf("can not open rules_config\n");
 		exit(1);
 	}
+	if (!(ffst = fopen(fst_path, "r")))
+	{
+		printf("can not open search_network\n");
+		exit(1);
+	}
 	
-	set_fst(&pypifst);
+	//set_fst(&pypifst);
+	readfst(&pypifst, ffst);
 	load_rules(frul, &pypirul);
+
+	fclose(ffst);
+	fclose(frul);
 }
 void pypiconversion(char **intext, char *output){
 	TEXT text_in, text_tmp, text_out;

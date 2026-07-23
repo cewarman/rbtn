@@ -1,5 +1,5 @@
 #include "TNlib.h"
-#include "network.h"
+//#include "network.h"
 char Tmp_symC[1][4] = {
 	{-30, -124, -125, '\0'}, /** ℃**/
 };
@@ -1169,22 +1169,6 @@ int Retreat_a_utf8_word(char *line, int *index)
 		exit(1);
 	}
 	return 1;
-}
-void destroy_fst(FST *fst)
-{
-	int i;
-
-	for (i = 0; i < fst->num_state; i++)
-	{
-		free(fst->aiit.forward_arcs[i]);
-	}
-	free(fst->aiit.forward_arcs);
-	free(fst->aiit.state_regular_input_length);
-	free(fst->aiit.eps_input_arcs);
-	free(fst->aiit.non_regular_input_arcs);
-	free(fst->aiit.possible_forward);
-	free(fst->aiit.regular_inputs);
-	free(fst->arc);
 }
 void destroy_text(TEXT *text)
 {
@@ -3439,6 +3423,7 @@ int bin_replace_word_search(char *rel_word, TRANSFORMATION_RULES *trel)
 	while (1)
 	{
 		middle = (low + up) * 0.5;
+		//printf("%s\n", trel->rp[middle].raw);
 		if (strncmp(rel_word, trel->rp[middle].raw, strlen(trel->rp[middle].raw)) > 0)
 		{
 			low = middle + 1;
@@ -7846,6 +7831,21 @@ void N2SSTF_LD(char *num_in, char *DPSPW, int language_code)
 		strcat(DPSPW, "P-to-P ");
 		flag = 1;
 	}
+	else if (strcmp(Nor_num_in, "C2C") == 0)
+	{
+		strcat(DPSPW, "C-to-C ");
+		flag = 1;
+	}
+	else if (strcmp(Nor_num_in, "C2B") == 0)
+	{
+		strcat(DPSPW, "C-to-B ");
+		flag = 1;
+	}
+	else if (strcmp(Nor_num_in, "O2O") == 0)
+	{
+		strcat(DPSPW, "O-to-O ");
+		flag = 1;
+	}
 	else if (strcmp(Nor_num_in, "PCHOME24H") == 0)
 	{
 		N2SWND(num_in, &(DPSPW[strlen(DPSPW)]), language_code);
@@ -8751,70 +8751,70 @@ void DPWAID(char *num_in, char *DPSPW, int language_code)
 
 	free(temp);
 }
-void set_fst(FST *fst)
-{
-	int i, j, k, input_length_acc, eps_input_acc, non_regular_input_acc, forward_arcs_acc;
-
-	fst->capacity = fst_network_capacity;
-	fst->size = fst_network_size;
-	fst->num_end = fst_network_num_end;
-	fst->num_state = fst_network_num_state;
-	fst->end_state = &fst_network_end_state[0];
-	fst->aiit.regular_input_size = fst_network_aiit_regular_input_size;
-	fst->aiit.max_input_length_size = fst_network_aiit_max_input_length_size;
-	fst->aiit.kind_of_regular_input_length = &fst_network_aiit_kind_of_regular_input_length[0];
-	fst->aiit.each_regular_input_length_start_idx = &fst_network_aiit_each_regular_input_length_start_idx[0];
-	fst->aiit.each_regular_input_length_word_number = &fst_network_aiit_each_regular_input_length_word_number[0];
-	fst->aiit.state_regular_input_length = (int **)malloc(fst->num_state * sizeof(int *));
-	fst->aiit.eps_input_num = &fst_network_aiit_eps_input_num[0];
-	fst->aiit.eps_input_arcs = (int **)malloc(fst->num_state * sizeof(int *));
-	fst->aiit.non_regular_input_arc_num = &fst_network_aiit_non_regular_input_arc_num[0];
-	fst->aiit.non_regular_input_arcs = (int **)malloc(fst->num_state * sizeof(int *));
-	fst->aiit.possible_forward = (unsigned short **)malloc(fst->num_state * sizeof(int *));
-	fst->aiit.forward_arcs = (int ***)malloc(fst->num_state * sizeof(int **));
-	fst->aiit.regular_inputs = (char **)malloc(fst->aiit.regular_input_size * sizeof(char *));
-	fst->arc = (ARC *)malloc(fst->size * sizeof(ARC));
-
-	for (i = input_length_acc = eps_input_acc = non_regular_input_acc = forward_arcs_acc = 0; i < fst->num_state; i++)
-	{
-		fst->aiit.state_regular_input_length[i] = &fst_network_aiit_state_regular_input_length[input_length_acc];
-		input_length_acc += fst->aiit.kind_of_regular_input_length[i];
-		fst->aiit.eps_input_arcs[i] = &fst_network_aiit_eps_input_arcs[eps_input_acc];
-		eps_input_acc += fst->aiit.eps_input_num[i];
-		fst->aiit.non_regular_input_arcs[i] = &fst_network_aiit_non_regular_input_arcs[non_regular_input_acc];
-		non_regular_input_acc += fst->aiit.non_regular_input_arc_num[i];
-		fst->aiit.possible_forward[i] = fst_network_aiit_possible_forward[i];
-		fst->aiit.forward_arcs[i] = (int **)malloc(fst->aiit.regular_input_size * sizeof(int *));
-		for (j = 0; j < fst->aiit.regular_input_size; j++)
-		{
-			// fst->aiit.forward_arcs[i][j] = (int *)malloc((fst->aiit.possible_forward[i][j] + 1) * sizeof(int));
-			// for (k = 0; k < fst->aiit.possible_forward[i][j]; k++)
-			//{
-			//	fst->aiit.forward_arcs[i][j][k] = fst_network_aiit_forward_arcs[forward_arcs_acc + k];
-			// }
-			if (fst->aiit.possible_forward[i][j] != 0)
-			{
-				fst->aiit.forward_arcs[i][j] = &fst_network_aiit_forward_arcs[forward_arcs_acc][0];
-				forward_arcs_acc++;
-			}
-			// fst->aiit.forward_arcs[i][j] = &fst_network_aiit_forward_arcs[forward_arcs_acc];
-			// forward_arcs_acc += fst->aiit.possible_forward[i][j];
-		}
-	}
-
-	for (i = 0; i < fst->aiit.regular_input_size; i++)
-	{
-		fst->aiit.regular_inputs[i] = fst_network_aiit_regular_inputs[i];
-	}
-
-	for (i = 0; i < fst->size; i++)
-	{
-		fst->arc[i].istate = fst_network_arcs_state[i][0];
-		fst->arc[i].ostate = fst_network_arcs_state[i][1];
-		fst->arc[i].itemp = fst_network_arcs_io[i][0];
-		fst->arc[i].otemp = fst_network_arcs_io[i][1];
-	}
-}
+//void set_fst(FST *fst)
+//{
+//	int i, j, k, input_length_acc, eps_input_acc, non_regular_input_acc, forward_arcs_acc;
+//
+//	fst->capacity = fst_network_capacity;
+//	fst->size = fst_network_size;
+//	fst->num_end = fst_network_num_end;
+//	fst->num_state = fst_network_num_state;
+//	fst->end_state = &fst_network_end_state[0];
+//	fst->aiit.regular_input_size = fst_network_aiit_regular_input_size;
+//	fst->aiit.max_input_length_size = fst_network_aiit_max_input_length_size;
+//	fst->aiit.kind_of_regular_input_length = &fst_network_aiit_kind_of_regular_input_length[0];
+//	fst->aiit.each_regular_input_length_start_idx = &fst_network_aiit_each_regular_input_length_start_idx[0];
+//	fst->aiit.each_regular_input_length_word_number = &fst_network_aiit_each_regular_input_length_word_number[0];
+//	fst->aiit.state_regular_input_length = (int **)malloc(fst->num_state * sizeof(int *));
+//	fst->aiit.eps_input_num = &fst_network_aiit_eps_input_num[0];
+//	fst->aiit.eps_input_arcs = (int **)malloc(fst->num_state * sizeof(int *));
+//	fst->aiit.non_regular_input_arc_num = &fst_network_aiit_non_regular_input_arc_num[0];
+//	fst->aiit.non_regular_input_arcs = (int **)malloc(fst->num_state * sizeof(int *));
+//	fst->aiit.possible_forward = (unsigned short **)malloc(fst->num_state * sizeof(int *));
+//	fst->aiit.forward_arcs = (int ***)malloc(fst->num_state * sizeof(int **));
+//	fst->aiit.regular_inputs = (char **)malloc(fst->aiit.regular_input_size * sizeof(char *));
+//	fst->arc = (ARC *)malloc(fst->size * sizeof(ARC));
+//
+//	for (i = input_length_acc = eps_input_acc = non_regular_input_acc = forward_arcs_acc = 0; i < fst->num_state; i++)
+//	{
+//		fst->aiit.state_regular_input_length[i] = &fst_network_aiit_state_regular_input_length[input_length_acc];
+//		input_length_acc += fst->aiit.kind_of_regular_input_length[i];
+//		fst->aiit.eps_input_arcs[i] = &fst_network_aiit_eps_input_arcs[eps_input_acc];
+//		eps_input_acc += fst->aiit.eps_input_num[i];
+//		fst->aiit.non_regular_input_arcs[i] = &fst_network_aiit_non_regular_input_arcs[non_regular_input_acc];
+//		non_regular_input_acc += fst->aiit.non_regular_input_arc_num[i];
+//		fst->aiit.possible_forward[i] = fst_network_aiit_possible_forward[i];
+//		fst->aiit.forward_arcs[i] = (int **)malloc(fst->aiit.regular_input_size * sizeof(int *));
+//		for (j = 0; j < fst->aiit.regular_input_size; j++)
+//		{
+//			// fst->aiit.forward_arcs[i][j] = (int *)malloc((fst->aiit.possible_forward[i][j] + 1) * sizeof(int));
+//			// for (k = 0; k < fst->aiit.possible_forward[i][j]; k++)
+//			//{
+//			//	fst->aiit.forward_arcs[i][j][k] = fst_network_aiit_forward_arcs[forward_arcs_acc + k];
+//			// }
+//			if (fst->aiit.possible_forward[i][j] != 0)
+//			{
+//				fst->aiit.forward_arcs[i][j] = &fst_network_aiit_forward_arcs[forward_arcs_acc][0];
+//				forward_arcs_acc++;
+//			}
+//			// fst->aiit.forward_arcs[i][j] = &fst_network_aiit_forward_arcs[forward_arcs_acc];
+//			// forward_arcs_acc += fst->aiit.possible_forward[i][j];
+//		}
+//	}
+//
+//	for (i = 0; i < fst->aiit.regular_input_size; i++)
+//	{
+//		fst->aiit.regular_inputs[i] = fst_network_aiit_regular_inputs[i];
+//	}
+//
+//	for (i = 0; i < fst->size; i++)
+//	{
+//		fst->arc[i].istate = fst_network_arcs_state[i][0];
+//		fst->arc[i].ostate = fst_network_arcs_state[i][1];
+//		fst->arc[i].itemp = fst_network_arcs_io[i][0];
+//		fst->arc[i].otemp = fst_network_arcs_io[i][1];
+//	}
+//}
 void YMOMDT(char *num_in, char *modify, int language_code)
 {
 	int i, idx;
@@ -10127,4 +10127,708 @@ int ch_numerals_to_ar_numerals(char *in, char *out)
 }
 void wrap_strcpy(char *t, char *s, int dummy){
 	strcpy(s,t);
+}
+void destroy_fst(FST *fst)
+{
+    int i, j;
+
+    if (fst == NULL)
+        return;
+
+    /*--------------------------------------------------
+     * ARC
+     *--------------------------------------------------*/
+    if (fst->arc)
+    {
+        for (i = 0; i < fst->size; i++)
+        {
+            free(fst->arc[i].itemp);
+            free(fst->arc[i].otemp);
+            free(fst->arc[i].wtemp);
+        }
+        free(fst->arc);
+    }
+
+    /*--------------------------------------------------
+     * End states
+     *--------------------------------------------------*/
+    if (fst->end_state)
+        free(fst->end_state);
+
+    if (fst->end_state_weight)
+    {
+        for (i = 0; i < fst->num_end; i++)
+            free(fst->end_state_weight[i]);
+        free(fst->end_state_weight);
+    }
+
+    /*--------------------------------------------------
+     * AIIT
+     *--------------------------------------------------*/
+
+    if (fst->aiit.regular_inputs)
+    {
+        for (i = 0; i < fst->aiit.regular_input_size; i++)
+            free(fst->aiit.regular_inputs[i]);
+        free(fst->aiit.regular_inputs);
+    }
+
+    free(fst->aiit.each_regular_input_length_word_number);
+    free(fst->aiit.each_regular_input_length_start_idx);
+
+    if (fst->aiit.possible_forward)
+    {
+        for (i = 0; i < fst->num_state; i++)
+            free(fst->aiit.possible_forward[i]);
+        free(fst->aiit.possible_forward);
+    }
+
+    if (fst->aiit.forward_arcs)
+    {
+        for (i = 0; i < fst->num_state; i++)
+        {
+            if (fst->aiit.forward_arcs[i])
+            {
+                for (j = 0; j < fst->aiit.regular_input_size; j++)
+                    free(fst->aiit.forward_arcs[i][j]);
+
+                free(fst->aiit.forward_arcs[i]);
+            }
+        }
+        free(fst->aiit.forward_arcs);
+    }
+
+    if (fst->aiit.non_regular_input_arcs)
+    {
+        for (i = 0; i < fst->num_state; i++)
+            free(fst->aiit.non_regular_input_arcs[i]);
+        free(fst->aiit.non_regular_input_arcs);
+    }
+
+    if (fst->aiit.eps_input_arcs)
+    {
+        for (i = 0; i < fst->num_state; i++)
+            free(fst->aiit.eps_input_arcs[i]);
+        free(fst->aiit.eps_input_arcs);
+    }
+
+    if (fst->aiit.state_regular_input_length)
+    {
+        for (i = 0; i < fst->num_state; i++)
+            free(fst->aiit.state_regular_input_length[i]);
+        free(fst->aiit.state_regular_input_length);
+    }
+
+    free(fst->aiit.non_regular_input_arc_num);
+    free(fst->aiit.eps_input_num);
+    free(fst->aiit.kind_of_regular_input_length);
+
+    /*--------------------------------------------------
+     * state_idx / possible_forward
+     *--------------------------------------------------*/
+    free(fst->state_idx);
+    free(fst->num_possible_forward);
+
+    if (fst->possible_forward)
+    {
+        for (i = 0; i < fst->num_state; i++)
+            free(fst->possible_forward[i]);
+        free(fst->possible_forward);
+    }
+
+    /*--------------------------------------------------
+     * state_zero_itemp
+     *--------------------------------------------------*/
+    if (fst->state_zero_itemp)
+    {
+        for (i = 0; i < fst->state_zero_possible_forward; i++)
+            free(fst->state_zero_itemp[i]);
+        free(fst->state_zero_itemp);
+    }
+
+    /*--------------------------------------------------
+     * FC_state_zero_itemp
+     *--------------------------------------------------*/
+    if (fst->FC_state_zero_itemp)
+    {
+        for (i = 0; i < fst->FC_state_zero_possible_forward; i++)
+            free(fst->FC_state_zero_itemp[i]);
+        free(fst->FC_state_zero_itemp);
+    }
+
+    free(fst->FC_state_zero_itemp_strat_idx);
+
+    /*--------------------------------------------------
+     * state_zero_info.regular_input
+     *--------------------------------------------------*/
+    if (fst->state_zero_info.regular_input)
+    {
+        for (i = 0; i < fst->state_zero_info.HMKOIL; i++)
+        {
+            for (j = 0; j < fst->state_zero_info.regular_input[i].size; j++)
+            {
+                free(fst->state_zero_info.regular_input[i].IS2S[j].input);
+                free(fst->state_zero_info.regular_input[i].IS2S[j].arcs);
+            }
+
+            free(fst->state_zero_info.regular_input[i].IS2S);
+        }
+
+        free(fst->state_zero_info.regular_input);
+    }
+
+    /*--------------------------------------------------
+     * state_zero_info.non_regular_input
+     *--------------------------------------------------*/
+    if (fst->state_zero_info.non_regular_input.IS2S)
+    {
+        for (i = 0; i < fst->state_zero_info.non_regular_input.size; i++)
+        {
+            free(fst->state_zero_info.non_regular_input.IS2S[i].input);
+            free(fst->state_zero_info.non_regular_input.IS2S[i].arcs);
+        }
+
+        free(fst->state_zero_info.non_regular_input.IS2S);
+    }
+
+    memset(fst, 0, sizeof(FST));
+}
+
+void readfst(FST *fst, FILE *ffst)
+{
+	int i, j, k, temp_size, ret, len;
+	int idx;
+	char word[7];
+	char line[1024];
+	char istate[1024], ostate[1024], itemp[1024], otemp[1024], wtemp[1024];
+	int maximum_length_of_input = 0;
+	int input_length_num[1024] = {0};
+	char **temp_regular_input;
+	int temp_regular_input_size, *temp_regular_input_num_split_by_len;
+	int *exist_flag;
+
+	for (fst->capacity = 0, fst->num_end = 0; fgets(line, 1023, ffst) != NULL;
+		 fst->capacity++)
+	{
+		if (parser_line(line, istate, ostate, itemp, otemp, wtemp) == 1)
+		{
+			fst->num_end++;
+		}
+	}
+	fst->num_state = atoi(istate) + 1;
+	// printf("fst->num_state=%d\n", fst->num_state);
+	fseek(ffst, 0, SEEK_SET);
+	fst->arc = (ARC *)malloc(fst->capacity * sizeof(ARC));
+	fst->end_state = (int *)malloc(fst->num_end * sizeof(int));
+	fst->end_state_weight = (char **)malloc(fst->num_end * sizeof(char *));
+
+	temp_regular_input = (char **)malloc(fst->capacity * sizeof(char *));
+
+	for (temp_regular_input_size = fst->size = 0, i = 0; fgets(line, 1023, ffst) != NULL;)
+	{
+		ret = parser_line(line, istate, ostate, itemp, otemp, wtemp);
+		if (ret == 1)
+		{
+			fst->end_state[i] = atoi(istate);
+			// strcpy(fst->end_state[i], istate);
+			fst->end_state_weight[i] =
+				(char *)malloc((strlen(wtemp) + 1) * sizeof(char));
+			strcpy(fst->end_state_weight[i++], wtemp);
+			// printf("%d ", atoi(istate));
+		}
+		else
+		{
+			fst->arc[fst->size].istate = atoi(istate);
+			fst->arc[fst->size].ostate = atoi(ostate);
+			fst->arc[fst->size].itemp = (char *)malloc((strlen(itemp) + 1) * sizeof(char));
+			if (strcmp(itemp, "<space>") == 0)
+			{
+				strcpy(itemp, " ");
+			}
+			else if (strcmp(itemp, "<tab>") == 0)
+			{
+				strcpy(itemp, "\t");
+			}
+			strcpy(fst->arc[fst->size].itemp, itemp);
+			fst->arc[fst->size].otemp = (char *)malloc((strlen(otemp) + 1) * sizeof(char));
+			strcpy(fst->arc[fst->size].otemp, otemp);
+			fst->arc[fst->size].wtemp = (char *)malloc((strlen(wtemp) + 1) * sizeof(char));
+			// printf("%d %s\n", fst->size, fst->arc[fst->size].itemp);
+			strcpy(fst->arc[fst->size++].wtemp, wtemp);
+			if (maximum_length_of_input < strlen(itemp) && (itemp[0] != '<' || itemp[strlen(itemp) - 1] != '>'))
+			{
+				maximum_length_of_input = strlen(itemp);
+				// printf("%d %s\n", fst->size, fst->arc[fst->size-1].itemp);
+			}
+			if (itemp[0] != '<' || itemp[strlen(itemp) - 1] != '>')
+			{
+				temp_regular_input[temp_regular_input_size] = (char *)malloc((strlen(itemp) + 1) * sizeof(char));
+				strcpy(temp_regular_input[temp_regular_input_size++], itemp);
+			}
+		}
+	}
+	/*******************************************************************************************************************************/
+	qsort(temp_regular_input, temp_regular_input_size, sizeof(char *), stringlengthcomparefun);
+	temp_regular_input_num_split_by_len = (int *)malloc(maximum_length_of_input * sizeof(int));
+	fst->aiit.max_input_length_size = maximum_length_of_input;
+	fst->aiit.each_regular_input_length_word_number = (int *)malloc(maximum_length_of_input * sizeof(int));
+	fst->aiit.each_regular_input_length_start_idx = (int *)malloc(maximum_length_of_input * sizeof(int));
+	exist_flag = (int *)malloc(maximum_length_of_input * sizeof(int));
+	for (i = 0; i < maximum_length_of_input; i++)
+	{
+		temp_regular_input_num_split_by_len[i] = 0;
+		fst->aiit.each_regular_input_length_word_number[i] = 0;
+		exist_flag[i] = 0;
+	}
+	for (i = 0; i < temp_regular_input_size; i++)
+	{
+		temp_regular_input_num_split_by_len[strlen(temp_regular_input[i]) - 1]++;
+	}
+	for (i = 0, j = 0; i < maximum_length_of_input; i++)
+	{
+		// printf("%d %d\n", temp_regular_input_num_split_by_len[i], j);
+		qsort(&temp_regular_input[j], temp_regular_input_num_split_by_len[i], sizeof(char *), stringcomparefun);
+		j += temp_regular_input_num_split_by_len[i];
+	}
+	fst->aiit.each_regular_input_length_word_number[strlen(temp_regular_input[0]) - 1]++;
+	for (i = 1; i < temp_regular_input_size; i++)
+	{
+		if (strcmp(temp_regular_input[i], temp_regular_input[i - 1]) != 0)
+		{
+			fst->aiit.each_regular_input_length_word_number[strlen(temp_regular_input[i]) - 1]++;
+		}
+	}
+	fst->aiit.each_regular_input_length_start_idx[0] = 0;
+	for (i = 0, fst->aiit.regular_input_size = 0; i < fst->aiit.max_input_length_size; i++)
+	{
+		fst->aiit.regular_input_size += fst->aiit.each_regular_input_length_word_number[i];
+		if (i > 0)
+		{
+			fst->aiit.each_regular_input_length_start_idx[i] = fst->aiit.each_regular_input_length_start_idx[i - 1] + fst->aiit.each_regular_input_length_word_number[i - 1];
+		}
+		// printf("%d %d\n", fst->aiit.each_regular_input_length_word_number[i], fst->aiit.each_regular_input_length_start_idx[i]);
+	}
+	fst->aiit.regular_inputs = (char **)malloc(fst->aiit.regular_input_size * sizeof(char *));
+	fst->aiit.regular_inputs[0] = (char *)malloc((strlen(temp_regular_input[0]) + 1) * sizeof(char));
+	strcpy(fst->aiit.regular_inputs[0], temp_regular_input[0]);
+	for (i = 1, j = 1; i < temp_regular_input_size; i++)
+	{
+		if (strcmp(temp_regular_input[i], temp_regular_input[i - 1]) != 0)
+		{
+			fst->aiit.regular_inputs[j] = (char *)malloc((strlen(temp_regular_input[i]) + 1) * sizeof(char));
+			strcpy(fst->aiit.regular_inputs[j++], temp_regular_input[i]);
+		}
+	}
+	// for (i = 0; i < fst->aiit.regular_input_size; i++)
+	//{
+	//	printf("%d %s\n", i + 1, fst->aiit.regular_inputs[i]);
+	// }
+	fst->aiit.possible_forward = (unsigned short **)malloc(fst->num_state * sizeof(int *));
+	fst->aiit.forward_arcs = (int ***)malloc(fst->num_state * sizeof(int **));
+	fst->aiit.non_regular_input_arc_num = (int *)malloc(fst->num_state * sizeof(int));
+	fst->aiit.non_regular_input_arcs = (int **)malloc(fst->num_state * sizeof(int *));
+	fst->aiit.eps_input_num = (int *)malloc(fst->num_state * sizeof(int));
+	fst->aiit.eps_input_arcs = (int **)malloc(fst->num_state * sizeof(int *));
+	fst->aiit.kind_of_regular_input_length = (int *)malloc(fst->num_state * sizeof(int));
+	fst->aiit.state_regular_input_length = (int **)malloc(fst->num_state * sizeof(int *));
+	for (i = 0; i < fst->num_state; i++)
+	{
+		fst->aiit.possible_forward[i] = (unsigned short *)malloc(fst->aiit.regular_input_size * sizeof(int));
+		fst->aiit.forward_arcs[i] = (int **)malloc(fst->aiit.regular_input_size * sizeof(int *));
+		fst->aiit.non_regular_input_arc_num[i] = 0;
+		fst->aiit.eps_input_num[i] = 0;
+		fst->aiit.kind_of_regular_input_length[i] = 0;
+		for (j = 0; j < fst->aiit.regular_input_size; j++)
+		{
+			fst->aiit.possible_forward[i][j] = 0;
+		}
+	}
+	// printf("fst->num_state=%d fst->aiit.regular_input_size=%d\n", fst->num_state, fst->aiit.regular_input_size);
+	for (i = 0; i < fst->size; i++)
+	{
+		if (fst->arc[i].itemp[0] != '<' || fst->arc[i].itemp[strlen(fst->arc[i].itemp) - 1] != '>')
+		{
+			fst->aiit.possible_forward[fst->arc[i].istate][fst->aiit.each_regular_input_length_start_idx[strlen(fst->arc[i].itemp) - 1] + bin_string_search_len_match(fst->arc[i].itemp, &fst->aiit.regular_inputs[fst->aiit.each_regular_input_length_start_idx[strlen(fst->arc[i].itemp) - 1]], fst->aiit.each_regular_input_length_word_number[strlen(fst->arc[i].itemp) - 1])]++;
+			exist_flag[strlen(fst->arc[i].itemp) - 1] = 1;
+		}
+		else if (strcmp(fst->arc[i].itemp, "<eps>") == 0)
+		{
+			fst->aiit.eps_input_num[fst->arc[i].istate]++;
+		}
+		else
+		{
+			fst->aiit.non_regular_input_arc_num[fst->arc[i].istate]++;
+		}
+		if (i < fst->size - 1)
+		{
+			if (fst->arc[i].istate != fst->arc[i + 1].istate)
+			{
+				for (j = 0; j < maximum_length_of_input; j++)
+				{
+					fst->aiit.kind_of_regular_input_length[fst->arc[i].istate] += exist_flag[j];
+					exist_flag[j] = 0;
+				}
+			}
+		}
+		else
+		{
+			for (j = 0; j < maximum_length_of_input; j++)
+			{
+				fst->aiit.kind_of_regular_input_length[fst->arc[i].istate] += exist_flag[j];
+				exist_flag[j] = 0;
+			}
+		}
+	}
+	for (i = 0; i < fst->num_state; i++)
+	{
+		fst->aiit.non_regular_input_arcs[i] = (int *)malloc((fst->aiit.non_regular_input_arc_num[i] + 1) * sizeof(int));
+		fst->aiit.non_regular_input_arc_num[i] = 0;
+		fst->aiit.eps_input_arcs[i] = (int *)malloc((fst->aiit.eps_input_num[i] + 1) * sizeof(int));
+		fst->aiit.eps_input_num[i] = 0;
+		fst->aiit.state_regular_input_length[i] = (int *)malloc((fst->aiit.kind_of_regular_input_length[i] + 1) * sizeof(int));
+		fst->aiit.kind_of_regular_input_length[i] = 0;
+		for (j = 0; j < fst->aiit.regular_input_size; j++)
+		{
+			fst->aiit.forward_arcs[i][j] = (int *)malloc((fst->aiit.possible_forward[i][j] + 1) * sizeof(int));
+			fst->aiit.possible_forward[i][j] = 0;
+		}
+	}
+	for (i = 0; i < fst->size; i++)
+	{
+		if (fst->arc[i].itemp[0] != '<' || fst->arc[i].itemp[strlen(fst->arc[i].itemp) - 1] != '>')
+		{
+			fst->aiit.forward_arcs[fst->arc[i].istate][fst->aiit.each_regular_input_length_start_idx[strlen(fst->arc[i].itemp) - 1] + bin_string_search_len_match(fst->arc[i].itemp, &fst->aiit.regular_inputs[fst->aiit.each_regular_input_length_start_idx[strlen(fst->arc[i].itemp) - 1]], fst->aiit.each_regular_input_length_word_number[strlen(fst->arc[i].itemp) - 1])][fst->aiit.possible_forward[fst->arc[i].istate][fst->aiit.each_regular_input_length_start_idx[strlen(fst->arc[i].itemp) - 1] + bin_string_search_len_match(fst->arc[i].itemp, &fst->aiit.regular_inputs[fst->aiit.each_regular_input_length_start_idx[strlen(fst->arc[i].itemp) - 1]], fst->aiit.each_regular_input_length_word_number[strlen(fst->arc[i].itemp) - 1])]++] = i;
+			exist_flag[strlen(fst->arc[i].itemp) - 1] = 1;
+		}
+		else if (strcmp(fst->arc[i].itemp, "<eps>") == 0)
+		{
+			fst->aiit.eps_input_arcs[fst->arc[i].istate][fst->aiit.eps_input_num[fst->arc[i].istate]++] = i;
+		}
+		else
+		{
+			fst->aiit.non_regular_input_arcs[fst->arc[i].istate][fst->aiit.non_regular_input_arc_num[fst->arc[i].istate]++] = i;
+		}
+		if (i < fst->size - 1)
+		{
+			if (fst->arc[i].istate != fst->arc[i + 1].istate)
+			{
+				for (j = 0; j < maximum_length_of_input; j++)
+				{
+					if (exist_flag[j] == 1)
+					{
+						fst->aiit.state_regular_input_length[fst->arc[i].istate][fst->aiit.kind_of_regular_input_length[fst->arc[i].istate]++] = j + 1;
+					}
+					exist_flag[j] = 0;
+				}
+			}
+		}
+		else
+		{
+			for (j = 0; j < maximum_length_of_input; j++)
+			{
+				if (exist_flag[j] == 1)
+				{
+					fst->aiit.state_regular_input_length[fst->arc[i].istate][fst->aiit.kind_of_regular_input_length[fst->arc[i].istate]++] = j + 1;
+				}
+				exist_flag[j] = 0;
+			}
+		}
+	}
+	/*printf("fst->aiit.possible_forward[0][743] = %d\n", fst->aiit.possible_forward[0][743]);
+	for (i = 0; i < fst->aiit.possible_forward[0][743]; i++)
+	{
+		printf("%d\n", fst->aiit.forward_arcs[0][743][i]);
+	}
+	printf("fst->aiit.non_regular_input_arc_num[0]=%d\n", fst->aiit.non_regular_input_arc_num[0]);
+	for (i = 0; i < fst->aiit.non_regular_input_arc_num[0]; i++)
+	{
+		printf("%d\n", fst->aiit.non_regular_input_arcs[0][i]);
+	}
+	printf("fst->aiit.non_regular_input_arc_num[24]=%d\n", fst->aiit.eps_input_num[24]);
+	for (i = 0; i < fst->aiit.eps_input_num[24]; i++)
+	{
+		printf("%d\n", fst->aiit.eps_input_arcs[24][i]);
+	}
+	printf("fst->aiit.kind_of_regular_input_length[1638]=%d\n", fst->aiit.kind_of_regular_input_length[1638]);
+	for (i = 0; i < fst->aiit.kind_of_regular_input_length[1638]; i++)
+	{
+		printf("%d\n", fst->aiit.state_regular_input_length[1638][i]);
+	}*/
+
+	for (i = 0; i < temp_regular_input_size; i++)
+	{
+		free(temp_regular_input[i]);
+	}
+	free(temp_regular_input);
+	free(temp_regular_input_num_split_by_len);
+	free(exist_flag);
+	/*******************************************************************************************************************************/
+
+	len = fst->num_state;
+	fst->state_idx = (int *)malloc(len * sizeof(int));
+	fst->num_possible_forward = (int *)malloc(len * sizeof(int));
+	fst->possible_forward = (int **)malloc(len * sizeof(int *));
+	for (i = 0; i < len; i++)
+	{
+		fst->num_possible_forward[i] = 0;
+	}
+	// printf("%d ",fst->arc[fst->size - 1].istate + 1);
+	for (j = 0; j < fst->num_end; j++)
+	{
+		fst->state_idx[(fst->end_state[j])] = 0;
+		// printf("%d\n", fst->end_state[j]);
+	}
+	fst->state_idx[0] = 0;
+	for (i = 0, j = fst->arc[i].istate; i < fst->size; i++)
+	{
+		// printf("%d %d\n", j, fst->arc[i].istate);
+		if (j != fst->arc[i].istate)
+		{
+			fst->num_possible_forward[fst->arc[i].istate]++;
+			// printf("%d ", fst->num_possible_forward[j]);
+			j = fst->arc[i].istate;
+			fst->state_idx[j] = i;
+		}
+		else
+		{
+			fst->num_possible_forward[j]++;
+		}
+	}
+	/*
+	for (i = 0; i < fst->arc[fst->size - 1].istate; i++)
+	{
+		printf("%d %d \n",i, fst->state_idx[i]);
+	}
+	*/
+
+	for (i = 0; i < len; i++)
+	{
+		fst->possible_forward[i] = (int *)malloc(sizeof(int) * fst->num_possible_forward[i]);
+		// printf("%d\t", i);
+		for (j = 0; j < fst->num_possible_forward[i]; j++)
+		{
+			fst->possible_forward[i][j] = fst->arc[fst->state_idx[i] + j].ostate;
+			// printf("%d ", fst->possible_forward[i][j]);
+		}
+		// printf("\n");
+	}
+
+	fst->state_zero_itemp = (char **)malloc(fst->num_possible_forward[0] * sizeof(char *));
+	fst->state_zero_info.non_regular_input.size = 0;
+	for (i = 0, fst->state_zero_possible_forward = 0; i < fst->num_possible_forward[0]; i++)
+	{
+		for (j = 0; j < fst->state_zero_possible_forward; j++)
+		{
+			if (strcmp(fst->arc[i].itemp, fst->state_zero_itemp[j]) == 0)
+			{
+				break;
+			}
+		}
+		if (j == fst->state_zero_possible_forward)
+		{
+			fst->state_zero_itemp[j] = (char *)malloc((strlen(fst->arc[i].itemp) + 1) * sizeof(char));
+			strcpy(fst->state_zero_itemp[j], fst->arc[i].itemp);
+			fst->state_zero_possible_forward++;
+			if (fst->state_zero_itemp[j][0] != '<' || fst->state_zero_itemp[j][strlen(fst->state_zero_itemp[j]) - 1] != '>')
+			{
+				input_length_num[strlen(fst->state_zero_itemp[j]) - 1]++;
+			}
+			else
+			{
+				for (k = 0; k < fst->state_zero_info.non_regular_input.size; k++)
+				{
+					if (strcmp(fst->state_zero_info.non_regular_input.IS2S[k].input, fst->state_zero_itemp[j]) == 0)
+					{
+						break;
+					}
+				}
+				if (k == fst->state_zero_info.non_regular_input.size)
+				{
+					if (fst->state_zero_info.non_regular_input.size == 0)
+					{
+						fst->state_zero_info.non_regular_input.IS2S = (ISYM2ISTATE *)malloc(sizeof(ISYM2ISTATE));
+						fst->state_zero_info.non_regular_input.IS2S[0].input = (char *)malloc((strlen(fst->state_zero_itemp[j]) + 1) * sizeof(char));
+						strcpy(fst->state_zero_info.non_regular_input.IS2S[0].input, fst->state_zero_itemp[j]);
+						fst->state_zero_info.non_regular_input.size = 1;
+					}
+					else
+					{
+						fst->state_zero_info.non_regular_input.IS2S = (ISYM2ISTATE *)realloc(fst->state_zero_info.non_regular_input.IS2S, (fst->state_zero_info.non_regular_input.size + 1) * sizeof(ISYM2ISTATE));
+						fst->state_zero_info.non_regular_input.IS2S[fst->state_zero_info.non_regular_input.size].input = (char *)malloc((strlen(fst->state_zero_itemp[j]) + 1) * sizeof(char));
+						strcpy(fst->state_zero_info.non_regular_input.IS2S[fst->state_zero_info.non_regular_input.size].input, fst->state_zero_itemp[j]);
+						fst->state_zero_info.non_regular_input.size++;
+					}
+				}
+			}
+		}
+	}
+	//	for (i = 0; i < fst->state_zero_info.non_regular_input.size; i++)
+	//	{
+	//		printf("%s\n", fst->state_zero_info.non_regular_input.IS2S[i].input);
+	//	}
+	for (i = 0, fst->state_zero_info.HMKOIL = 0; i < maximum_length_of_input; i++)
+	{
+		if (input_length_num[i] != 0)
+		{
+			fst->state_zero_info.HMKOIL++;
+		}
+	}
+	fst->state_zero_info.regular_input = (STATE_ZERO_TRANSITIONS *)malloc(fst->state_zero_info.HMKOIL * sizeof(STATE_ZERO_TRANSITIONS));
+	for (i = j = 0; i < maximum_length_of_input; i++)
+	{
+		if (input_length_num[i] != 0)
+		{
+			fst->state_zero_info.regular_input[j].length = i + 1;
+			fst->state_zero_info.regular_input[j++].size = input_length_num[i];
+		}
+	}
+	for (i = 0; i < fst->state_zero_info.HMKOIL; i++)
+	{
+		fst->state_zero_info.regular_input[i].IS2S = (ISYM2ISTATE *)malloc(fst->state_zero_info.regular_input[i].size * sizeof(ISYM2ISTATE));
+		for (j = 0, temp_size = 0; j < fst->num_possible_forward[0]; j++)
+		{
+			if (fst->state_zero_info.regular_input[i].length == strlen(fst->arc[j].itemp) && (fst->arc[j].itemp[0] != '<' || fst->arc[j].itemp[strlen(fst->arc[j].itemp) - 1] != '>'))
+			{
+				for (k = 0; k < temp_size; k++)
+				{
+					if (strcmp(fst->state_zero_info.regular_input[i].IS2S[k].input, fst->arc[j].itemp) == 0)
+					{
+						break;
+					}
+				}
+				if (k == temp_size)
+				{
+					fst->state_zero_info.regular_input[i].IS2S[temp_size].input = (char *)malloc((strlen(fst->arc[j].itemp) + 1) * sizeof(char));
+					strcpy(fst->state_zero_info.regular_input[i].IS2S[temp_size].input, fst->arc[j].itemp);
+					fst->state_zero_info.regular_input[i].IS2S[temp_size].number_of_forward_arcs = 1;
+					temp_size++;
+				}
+				else
+				{
+					fst->state_zero_info.regular_input[i].IS2S[k].number_of_forward_arcs++;
+				}
+				// printf("%s ", fst->arc[j].itemp);
+			}
+		}
+		// printf("%d %d %d\n", fst->state_zero_info.regular_input[i].length, temp_size, fst->state_zero_info.regular_input[i].size);
+		// for (j = 0; j < fst->state_zero_info.regular_input[i].size; j++)
+		//{
+		//	printf("(%s %d) ", fst->state_zero_info.regular_input[i].IS2S[j].input, fst->state_zero_info.regular_input[i].IS2S[j].number_of_forward_arcs);
+		// }
+		// printf("\n\n");
+	}
+	for (i = 0; i < fst->state_zero_info.HMKOIL; i++)
+	{
+		for (j = 0; j < fst->state_zero_info.regular_input[i].size; j++)
+		{
+			fst->state_zero_info.regular_input[i].IS2S[j].arcs = (int *)malloc(fst->state_zero_info.regular_input[i].IS2S[j].number_of_forward_arcs * sizeof(int));
+			fst->state_zero_info.regular_input[i].IS2S[j].number_of_forward_arcs = 0;
+		}
+		for (j = 0; j < fst->num_possible_forward[0]; j++)
+		{
+			if (fst->state_zero_info.regular_input[i].length == strlen(fst->arc[j].itemp) && (fst->arc[j].itemp[0] != '<' || fst->arc[j].itemp[strlen(fst->arc[j].itemp) - 1] != '>'))
+			{
+				for (k = 0; k < fst->state_zero_info.regular_input[i].size; k++)
+				{
+					if (strcmp(fst->state_zero_info.regular_input[i].IS2S[k].input, fst->arc[j].itemp) == 0)
+					{
+						break;
+					}
+				}
+				if (k == fst->state_zero_info.regular_input[i].size)
+				{
+					printf("Error: FST-network reading fail.\n");
+					exit(1);
+				}
+				else
+				{
+					fst->state_zero_info.regular_input[i].IS2S[k].arcs[fst->state_zero_info.regular_input[i].IS2S[k].number_of_forward_arcs++] = j;
+				}
+			}
+		}
+		qsort(fst->state_zero_info.regular_input[i].IS2S, fst->state_zero_info.regular_input[i].size, sizeof(ISYM2ISTATE), isym2istatecomparefun);
+		//		printf("%d %d %d\n", fst->state_zero_info.regular_input[i].length, temp_size, fst->state_zero_info.regular_input[i].size);
+		//		for (j = 0; j < fst->state_zero_info.regular_input[i].size; j++)
+		//		{
+		//			printf("(%s %d) ", fst->state_zero_info.regular_input[i].IS2S[j].input, fst->state_zero_info.regular_input[i].IS2S[j].number_of_forward_arcs);
+		//			for (k = 0; k < fst->state_zero_info.regular_input[i].IS2S[j].number_of_forward_arcs; k++)
+		//			{
+		//				printf("%d ", fst->state_zero_info.regular_input[i].IS2S[j].arcs[k]);
+		//			}
+		//			printf("\n");
+		//		}
+		//		printf("\n");
+	}
+	for (i = 0; i < fst->state_zero_info.non_regular_input.size; i++)
+	{
+		fst->state_zero_info.non_regular_input.IS2S[i].number_of_forward_arcs = 0;
+		for (j = 0; j < fst->num_possible_forward[0]; j++)
+		{
+			if (strcmp(fst->state_zero_info.non_regular_input.IS2S[i].input, fst->arc[j].itemp) == 0)
+			{
+				fst->state_zero_info.non_regular_input.IS2S[i].number_of_forward_arcs++;
+			}
+		}
+
+		fst->state_zero_info.non_regular_input.IS2S[i].arcs = (int *)malloc(fst->state_zero_info.non_regular_input.IS2S[i].number_of_forward_arcs * sizeof(int));
+		for (j = temp_size = 0; j < fst->num_possible_forward[0]; j++)
+		{
+			if (strcmp(fst->state_zero_info.non_regular_input.IS2S[i].input, fst->arc[j].itemp) == 0)
+			{
+				fst->state_zero_info.non_regular_input.IS2S[i].arcs[temp_size++] = j;
+			}
+		}
+		// printf("%s %d\t", fst->state_zero_info.non_regular_input.IS2S[i].input, fst->state_zero_info.non_regular_input.IS2S[i].number_of_forward_arcs);
+		// for (j = 0; j < fst->state_zero_info.non_regular_input.IS2S[i].number_of_forward_arcs; j++)
+		//{
+		//	printf("%d ", fst->state_zero_info.non_regular_input.IS2S[i].arcs[j]);
+		// }
+		// printf("\n");
+	}
+	//	printf("maximum_length_of_input=%d\n", maximum_length_of_input);
+	//	for (i = 0; i < maximum_length_of_input;i++)
+	//	{
+	//		printf("%d\n", input_length_num[i]);
+	//	}
+	//	printf("HMKOIL = %d\n", fst->state_zero_info.HMKOIL);
+	//	for (i = 0; i < fst->state_zero_info.HMKOIL; i++)
+	//	{
+	//		printf("%d %d\n", fst->state_zero_info.regular_input[i].length, fst->state_zero_info.regular_input[i].size);
+	//	}
+	qsort(fst->state_zero_itemp, fst->state_zero_possible_forward, sizeof(char *), stringcomparefun);
+	/*printf("%d\n", fst->state_zero_possible_forward);
+	for (j = 0; j < fst->state_zero_possible_forward; j++)
+	{
+		printf("%d word=%s len=%d\n", j + 1, fst->state_zero_itemp[j], strlen(fst->state_zero_itemp[j]));
+	}*/
+	fst->FC_state_zero_itemp = (char **)malloc(fst->state_zero_possible_forward * sizeof(char *));
+	fst->FC_state_zero_itemp_strat_idx = (int *)malloc((fst->state_zero_possible_forward + 1) * sizeof(int));
+	idx = 0;
+	read_a_utf8_word(fst->state_zero_itemp[0], word, &idx);
+	fst->FC_state_zero_itemp[0] = (char *)malloc((strlen(word) + 1) * sizeof(char));
+	strcpy(fst->FC_state_zero_itemp[0], word);
+	fst->FC_state_zero_itemp_strat_idx[0] = 0;
+	for (i = 1, fst->FC_state_zero_possible_forward = 1, idx = 0; i < fst->state_zero_possible_forward; i++, idx = 0)
+	{
+		read_a_utf8_word(fst->state_zero_itemp[i], word, &idx);
+		if (strcmp(fst->FC_state_zero_itemp[fst->FC_state_zero_possible_forward - 1], word) != 0)
+		{
+			fst->FC_state_zero_itemp[fst->FC_state_zero_possible_forward] = (char *)malloc((strlen(word) + 1) * sizeof(char));
+			strcpy(fst->FC_state_zero_itemp[fst->FC_state_zero_possible_forward], word);
+			fst->FC_state_zero_itemp_strat_idx[fst->FC_state_zero_possible_forward++] = i;
+		}
+	}
+	fst->FC_state_zero_itemp_strat_idx[fst->FC_state_zero_possible_forward] = fst->state_zero_possible_forward;
+
+	/*printf("%d\n",fst->FC_state_zero_possible_forward);
+	for (i = 0; i < fst->FC_state_zero_possible_forward; i++)
+	{
+		printf("%d %s %d\n", i + 1, fst->FC_state_zero_itemp[i], fst->FC_state_zero_itemp_strat_idx[i]);
+	}*/
+}
+int isym2istatecomparefun(const void *a, const void *b)
+{
+	const char *pa = ((ISYM2ISTATE *)a)->input;
+	const char *pb = ((ISYM2ISTATE *)b)->input;
+	return strcmp(pa, pb);
 }

@@ -111,6 +111,8 @@ iPhone 10R
 iPhone XR
 2%
 25Hz
+B2B
+C2C
 O2O
 NVIDIA
  NVIDIA

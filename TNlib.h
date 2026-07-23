@@ -104,9 +104,14 @@ extern char mathematical_symbols_english_only[2][2][32];
 extern char mandarin_money[4];
 extern char unit_table[1][2][32];
 
+//typedef struct _ARC_
+//{
+//	char  *itemp, *otemp;
+//	int istate, ostate;
+//} ARC;
 typedef struct _ARC_
 {
-	char  *itemp, *otemp;
+	char *itemp, *otemp, *wtemp;
 	int istate, ostate;
 } ARC;
 typedef struct _ALL_ISYM_ISTATE_TABLE_
@@ -120,11 +125,46 @@ typedef struct _ALL_ISYM_ISTATE_TABLE_
 	int *kind_of_regular_input_length, **state_regular_input_length;
 
 } ALL_ISYM_ISTATE_TABLE;
+//typedef struct _FST_
+//{
+//	int capacity, size, num_end;
+//	int *end_state;
+//	int num_state;
+//	ALL_ISYM_ISTATE_TABLE aiit;
+//	ARC *arc;
+//} FST;
+typedef struct _ISYM2ISTATE_
+{
+	char *input;
+	int number_of_forward_arcs;
+	int *arcs;
+} ISYM2ISTATE;
+typedef struct _STATE_ZERO_TRANSITIONS_
+{
+	int size;
+	int length;
+	ISYM2ISTATE *IS2S;
+} STATE_ZERO_TRANSITIONS;
+typedef struct _STATE_ZERO_INFO_
+{
+	int HMKOIL; // how many kind of input lenght
+	STATE_ZERO_TRANSITIONS *regular_input;
+	STATE_ZERO_TRANSITIONS non_regular_input;
+} STATE_ZERO_INFO;
 typedef struct _FST_
 {
 	int capacity, size, num_end;
 	int *end_state;
+	char **end_state_weight;
+	int *state_idx;
+	int **possible_forward, *num_possible_forward;
 	int num_state;
+	int state_zero_possible_forward;
+	int FC_state_zero_possible_forward;
+	int *FC_state_zero_itemp_strat_idx;
+	char **state_zero_itemp;
+	char **FC_state_zero_itemp;
+	STATE_ZERO_INFO state_zero_info;
 	ALL_ISYM_ISTATE_TABLE aiit;
 	ARC *arc;
 } FST;
@@ -381,7 +421,9 @@ void SDPTSFW(char *num_in, char *DPSPW);										// simple_decimal_point_to_spo
 //void TempDPTSFW(char *num_in, char *DPSPW);									// decimal_point_to_spoken_form_word
 /*add from shoawei's RBTN version 1090429*/
 
-void set_fst(FST *fst);
+//void set_fst(FST *fst);
+void readfst(FST *fst, FILE *ffst);
+int isym2istatecomparefun(const void *a, const void *b);
 void destroy_rules(RULES *rul);
 void destroy_flags(FLAGS *flags);
 void destroy_transformation(TRANSFORMATION *tra);
