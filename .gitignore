@@ -14,3 +14,6 @@ fst_gen/symlist
 fst_gen/temp
 pypiRBTN.so
 non_standard_word_marks.txt
+testenv
+wheelhouse
+test2.py
