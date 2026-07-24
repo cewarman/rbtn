@@ -1,10 +1,9 @@
 [build-system]
 requires = [
     "setuptools>=68",
-    "wheel",
-    "setuptools-scm"
+    "wheel"
 ]
-build-backend = "setuptools.build_meta:__legacy__"
+build-backend = "setuptools.build_meta"
 
 
 [project]
@@ -22,15 +21,8 @@ package-dir = {"" = "src"}
 where = ["src"]
 
 
-[tool.setuptools.package-data]
-rbtn = [
-    "*.so",
-    "*.dll",
-    "*.dylib",
-    "*.txt"
-]
-
 [tool.cibuildwheel]
+
 build = [
     "cp39-*",
     "cp310-*",
@@ -39,8 +31,9 @@ build = [
     "cp313-*"
 ]
 
+
 skip = [
     "*-musllinux*",
+    "*-win32",
     "*t-*"
 ]
-
