@@ -38,6 +38,7 @@ jobs:
       - name: Build wheels
         env:
           CIBW_BUILD_VERBOSITY: 3
+          CIBW_BUILD_FRONTEND: build
         run: |
           cibuildwheel --output-dir wheelhouse
 
@@ -51,3 +52,9 @@ jobs:
           find . -name "*.so" || true
           find . -name "*.dll" || true
           find . -name "*.dylib" || true
+      - name: Debug setup
+        shell: bash
+        run: |
+          ls -R
+          cat setup.py
+          cat pyproject.toml
