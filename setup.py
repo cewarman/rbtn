@@ -1,25 +1,42 @@
-from setuptools import setup, Extension, find_packages
+from setuptools import setup, Extension
+from setuptools.dist import Distribution
 
 
-ext_modules = [
-    Extension(
-        "rbtn.pypiRBTN",
-        sources=[
-            "C/RBTN.c",
-            "C/TNlib.c",
-        ],
-        extra_compile_args=[
-            "/std:c11",
-            "/O2",
-        ],
-    )
-]
+class BinaryDistribution(Distribution):
+    def has_ext_modules(self):
+        return True
+
+
+rbtn_extension = Extension(
+    name="rbtn.pypiRBTN",
+    sources=[
+        "C/RBTN.c",
+        "C/TNlib.c",
+    ],
+    extra_compile_args=[
+        "-O3",
+    ],
+)
 
 
 setup(
-    name="rbtn",
-    version="0.1.8",
-    package_dir={"": "src"},
-    packages=find_packages("src"),
-    ext_modules=ext_modules,
+    distclass=BinaryDistribution,
+
+    ext_modules=[
+        rbtn_extension,
+    ],
+
+    package_dir={
+        "": "src"
+    },
+
+    packages=[
+        "rbtn"
+    ],
+
+    package_data={
+        "rbtn": [
+            "*.txt"
+        ]
+    },
 )

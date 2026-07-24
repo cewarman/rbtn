@@ -7,32 +7,32 @@ build-backend = "setuptools.build_meta"
 
 
 [project]
-name = "rbtn"
-version = "0.1.8"
-description = "convert non-standard words to spoken-form words"
-requires-python = ">=3.8"
+name="rbtn"
+version="0.1.8"
+description="convert non-standard words to spoken-form words"
+requires-python=">=3.8"
 
 
 [tool.setuptools]
-package-dir = {"" = "src"}
+package-dir={""="src"}
 
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where=["src"]
 
 
 [tool.cibuildwheel]
 
-build = [
-    "cp39-*",
-    "cp310-*",
-    "cp311-*",
-    "cp312-*",
-    "cp313-*"
+build=[
+"cp39-*",
+"cp310-*",
+"cp311-*",
+"cp312-*",
+"cp313-*"
 ]
 
-skip = [
-    "*-musllinux*",
-    "*-win32",
-    "*t-*"
+skip=[
+"*-musllinux*",
+"*win32",
+"*t-*"
 ]
