@@ -7,6 +7,8 @@ import shutil
 import platform
 from pathlib import Path
 
+print("SETUP.PY LOADED")
+
 class BinaryDistribution(Distribution):
 
     def has_ext_modules(self):
