@@ -26,6 +26,10 @@ class BuildLibrary(build_py):
             Path(self.build_lib)
             / "rbtn"
         )
+        output.mkdir(
+            parents=True,
+            exist_ok=True
+        )
 
 
         system = platform.system()
@@ -89,7 +93,6 @@ class BuildLibrary(build_py):
 
 setup(
     distclass=BinaryDistribution,
-
     cmdclass={
         "build_py": BuildLibrary
     }

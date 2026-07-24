@@ -4,7 +4,7 @@ requires = [
     "wheel",
     "setuptools-scm"
 ]
-build-backend = "setuptools.build_meta"
+build-backend = "setuptools.build_meta:__legacy__"
 
 
 [project]
@@ -43,3 +43,4 @@ skip = [
     "*-musllinux*",
     "*t-*"
 ]
+
