@@ -1,19 +1,13 @@
 from setuptools import setup, Extension, find_packages
-from pathlib import Path
 
 
-ext_modules = [
-    Extension(
-        name="rbtn.pypiRBTN",
-        sources=[
-            "C/RBTN.c",
-            "C/TNlib.c",
-        ],
-        extra_compile_args=[
-            "-O3",
-        ],
-    )
-]
+module = Extension(
+    "rbtn.pypiRBTN",
+    sources=[
+        "C/RBTN.c",
+        "C/TNlib.c",
+    ],
+)
 
 
 setup(
@@ -23,11 +17,13 @@ setup(
     package_dir={"": "src"},
     packages=find_packages("src"),
 
-    ext_modules=ext_modules,
+    ext_modules=[
+        module
+    ],
 
     package_data={
         "rbtn": [
-            "*.txt",
+            "*.txt"
         ]
     },
 )
