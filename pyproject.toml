@@ -33,5 +33,6 @@ build = [
 
 skip = [
     "*-musllinux*",
+    "*-win32",
     "*t-*"
 ]
