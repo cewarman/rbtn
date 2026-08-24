@@ -24,6 +24,25 @@ jobs:
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v3.2.0
+        env:
+          CIBW_BEFORE_BUILD_LINUX: >
+            gcc -shared -fPIC -O3
+            C/RBTN.c C/TNlib.c
+            -o src/rbtn/pypiRBTN.so
+
+          CIBW_BEFORE_BUILD_WINDOWS: >
+            cl /LD /O2
+            C\RBTN.c C\TNlib.c
+            /Fe:src\rbtn\pypiRBTN.dll
+
+          CIBW_BEFORE_BUILD_MACOS: >
+            clang -arch arm64 -shared -O3
+            C/RBTN.c C/TNlib.c
+            -o src/rbtn/pypiRBTN.dylib &&
+            file src/rbtn/pypiRBTN.dylib &&
+            lipo -info src/rbtn/pypiRBTN.dylib &&
+            ls -lh src/rbtn/
+
         with:
           output-dir: wheelhouse
 
