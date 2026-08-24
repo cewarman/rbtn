@@ -36,3 +36,5 @@ skip=[
 "*win32",
 "*t-*"
 ]
+
+build-verbosity = 3
