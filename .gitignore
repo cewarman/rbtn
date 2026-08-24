@@ -5,7 +5,7 @@ RBTN
 RBTN.o
 TNlib.o
 network.h
-rbtn
+./rbtn
 update.txt
 venv
 testing.py
