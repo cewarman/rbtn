@@ -2,11 +2,14 @@ name: Build wheels
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - main
 
 jobs:
   build_wheels:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
         os:
@@ -14,8 +17,6 @@ jobs:
           - windows-latest
           - macos-13
           - macos-14
-
-    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout
