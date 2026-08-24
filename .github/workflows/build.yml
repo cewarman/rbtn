@@ -28,15 +28,17 @@ jobs:
           CIBW_BEFORE_BUILD_LINUX: >
             gcc -shared -fPIC -O3
             C/RBTN.c C/TNlib.c
-            -o src/rbtn/pypiRBTN.so
+            -o src/rbtn/pypiRBTN.so &&
+            file src/rbtn/pypiRBTN.so
 
           CIBW_BEFORE_BUILD_WINDOWS: >
-            cl /LD /O2
-            C\RBTN.c C\TNlib.c
-            /Fe:src\rbtn\pypiRBTN.dll
+            call "C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Auxiliary\Build\vcvars64.bat" &&
+            where cl &&
+            cl /LD /O2 C\RBTN.c C\TNlib.c /Fe:src\rbtn\pypiRBTN.dll &&
+            dir src\rbtn\pypiRBTN.dll
 
           CIBW_BEFORE_BUILD_MACOS: >
-            clang -arch arm64 -shared -O3
+            clang -shared -O3
             C/RBTN.c C/TNlib.c
             -o src/rbtn/pypiRBTN.dylib &&
             file src/rbtn/pypiRBTN.dylib &&
