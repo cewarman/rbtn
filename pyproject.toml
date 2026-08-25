@@ -10,6 +10,7 @@ build-backend = "setuptools.build_meta"
 name="rbtn"
 version="0.1.10"
 description="convert non-standard words to spoken-form words"
+readme = "src/rbtn/README.md"
 requires-python=">=3.8"
 
 
