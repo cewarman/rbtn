@@ -40,10 +40,7 @@ jobs:
           CIBW_BEFORE_BUILD_MACOS: >
             clang -shared -O3
             C/RBTN.c C/TNlib.c
-            -o src/rbtn/pypiRBTN.dylib &&
-            file src/rbtn/pypiRBTN.dylib &&
-            lipo -info src/rbtn/pypiRBTN.dylib &&
-            ls -lh src/rbtn/
+            -o src/rbtn/pypiRBTN.dylib 
 
         with:
           output-dir: wheelhouse
@@ -53,3 +50,26 @@ jobs:
         with:
           name: wheels-${{ matrix.os }}
           path: wheelhouse/*.whl
+
+publish:
+    name: Publish to PyPI
+    needs: build_wheels
+    runs-on: ubuntu-latest
+
+    environment:
+      name: pypi
+      url: https://pypi.org/p/rbtn
+
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Download wheels
+        uses: actions/download-artifact@v4
+        with:
+          pattern: wheels-*
+          path: dist
+          merge-multiple: true
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
