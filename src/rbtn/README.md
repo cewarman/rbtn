@@ -1,0 +1,30 @@
+# Rule-based text normalization system
+
+## ✨ Features
+消除文字的歧異，為文字轉語音系統的前置工作。<br>
+如：<br>
+&emsp;7/19是星期五  ->  七月十九號是星期五<br>
+&emsp;2/3的人不喜歡香菜  ->  三分之二的人不喜歡香菜<br>
+## 🚀 Quick Start
+```terminal
+import rbtn.cetn as rbcetn
+
+tn=rbcetn.textnormalizer()
+nt=tn.get_normalized_text(['30年', '', '0050'])
+print(nt)
+```
+## 📊 Demo / Results
+<img width="1852" height="604" alt="image" src="https://github.com/user-attachments/assets/8a8a9544-a769-48b2-bbec-e12771630ceb" />
+
+## 📁 Project Structure
+
+<img width="630" height="154" alt="RBTN" src="https://github.com/user-attachments/assets/2fd389f3-b4ec-42c2-9c7c-a53c40b35981" />
+
+
+## ⚙️ Configuration
+## 📚 Citation
+## 📜 License
+
+This project is available for academic and research use only.
+
+Commercial use requires explicit permission from the author.
