@@ -10,8 +10,9 @@
 import rbtn.cetn as rbcetn
 
 tn=rbcetn.textnormalizer()
-nt=tn.get_normalized_text(['30年', '', '0050'])
+nt,nws=tn.get_normalized_text(['30年', '', '0050', '測試一下\n99'])
 print(nt)
+print(nws)
 ```
 ## 📊 Demo / Results
 <img width="1852" height="604" alt="image" src="https://github.com/user-attachments/assets/8a8a9544-a769-48b2-bbec-e12771630ceb" />

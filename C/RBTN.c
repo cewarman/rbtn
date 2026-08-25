@@ -8,7 +8,9 @@ RULES pypirul;
 FLAGS pypiflags;
 
 void pypiloadrules(char *rules_config_path, char *fst_path);
-void pypiconversion(char **intext, char *output);
+void pypiconversion(char **intext, char *output, char *nswmsinfo);
+void pypifill_non_standard_word_marks(char *pypinswms, char *line, NSW_TOKEN *nsw);
+void pypilineconversion(FST *fst, TEXT *text_in, TEXT *text_out, FLAGS *flags, TRANSFORMATION *tra, char *nswmsinfo);
 void run(FILE *frul, /* FILE *flpe,*/ FILE *fin, FILE *fout, FILE *fnswm);
 void convservation(FST *fst, TEXT *text_in, TEXT *text_out, FLAGS *flags, TRANSFORMATION *tra, FILE *fnswm);
 void output_non_standard_word_marks(FILE *fnswm, char *line, NSW_TOKEN *nsw);
@@ -626,9 +628,11 @@ void pypiloadrules(char *rules_config_path, char *fst_path){
 	fclose(ffst);
 	fclose(frul);
 }
-void pypiconversion(char **intext, char *output){
+void pypiconversion(char **intext, char *output, char *nswmsinfo){
 	TEXT text_in, text_tmp, text_out;
 	int i, num_line = 0;
+
+	nswmsinfo[0] = '\0';
 	
 	for(i=0; intext[i][0]!='\0'; i++)
 	{
@@ -644,7 +648,7 @@ void pypiconversion(char **intext, char *output){
 		strcpy(text_in.sentence[i], intext[i]);
 	}
 
-	convservation(&pypifst, &text_in, &text_tmp, &pypiflags, &(pypirul.tra), NULL);
+	pypilineconversion(&pypifst, &text_in, &text_tmp, &pypiflags, &(pypirul.tra), nswmsinfo);
 	//return;
 	substitute(&text_tmp, &text_out, &(pypirul.sub));
 
@@ -664,4 +668,54 @@ void pypiconversion(char **intext, char *output){
 	destroy_text(&text_in);
 	destroy_text(&text_tmp);
 	destroy_text(&text_out);
+}
+void pypifill_non_standard_word_marks(char *pypinswms, char *line, NSW_TOKEN *nsw)
+{
+	int i, start_idx_utf8_form, end_idx_utf8_form;
+	char word[7];
+	int idx;
+
+	pypinswms[0]='\0';
+
+	sprintf(pypinswms, "%s\t%d\n", line, nsw->size);
+	for (i = 0; i < nsw->size; i++)
+	{
+		for (start_idx_utf8_form = end_idx_utf8_form = idx = 0; read_a_utf8_word(line, word, &idx) == 0;)
+		{
+			if (idx <= nsw->start_idx[i])
+			{
+				start_idx_utf8_form++;
+			}
+			if (idx <= nsw->end_idx[i])
+			{
+				end_idx_utf8_form++;
+			}
+			else
+			{
+				break;
+			}
+		}
+		sprintf(&pypinswms[strlen(pypinswms)], "\t%d∥\t%d∥\t%d∥\t%s∥\t%s∥\t%d∥\t%s\n", i + 1, start_idx_utf8_form, end_idx_utf8_form, nsw->token[i], nsw->rule[i], nsw->language[i], nsw->SFW[i]);
+	}
+}
+void pypilineconversion(FST *fst, TEXT *text_in, TEXT *text_out, FLAGS *flags, TRANSFORMATION *tra, char *nswmsinfo)
+{
+	int i;
+	NSW_TOKEN nsw;
+	VITERBIINFO vinfo;
+
+	text_out->num_of_sentence = text_in->num_of_sentence;
+	text_out->sentence = (char **)malloc(text_out->num_of_sentence * sizeof(char *));
+
+	ini_nsw(&nsw);
+	initial_viterbi_info(fst, &vinfo);
+	for (i = 0; i < text_in->num_of_sentence; i++)
+	{
+		//printf("%d %s\n", i + 1, text_in->sentence[i]);
+		paser_a_sentence(fst, &vinfo, text_in->sentence[i], &nsw);
+		fill_text_out(text_in->sentence[i], &(text_out->sentence[i]), i, &nsw, flags, tra, NULL);
+		pypifill_non_standard_word_marks(nswmsinfo, text_in->sentence[i], &nsw);
+	}
+	destroy_viterbi_info(&vinfo);
+	destroy_nsw(&nsw);
 }

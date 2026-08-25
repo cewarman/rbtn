@@ -20,6 +20,7 @@ class textnormalizer:
 
     def get_normalized_text(self, raw_txt):
         ret_list=[]
+        nws_list=[]
         if(type(raw_txt) is not list):
             print('input must be a list.')
             return
@@ -28,11 +29,13 @@ class textnormalizer:
                 ret_list.append('')
             else:
                 buf = create_string_buffer(len(raw_txt[i])*32*4)
-                self.lib.pypiconversion((c_char_p * 2)(* [s.encode('utf-8') for s in [raw_txt[i], '']]), buf)
+                buf2 = create_string_buffer(len(raw_txt[i])*32*4)
+                self.lib.pypiconversion((c_char_p * 2)(* [s.encode('utf-8') for s in [raw_txt[i], '']]), buf, buf2)
                 ret_list.append(buf.value.decode())
-        return ret_list
+                nws_list.append(buf2.value.decode())
+        return ret_list, nws_list
 
 if __name__ == '__main__':
     tn=textnormalizer()
-    nt=tn.get_normalized_text(['20年', '', '0050'])
-    print(nt)
+    nt, nws=tn.get_normalized_text(['20年', '', '0050'])
+    print(nt, nws)
