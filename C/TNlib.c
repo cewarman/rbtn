@@ -8036,7 +8036,7 @@ void UAPPUN(char *upu, char *modify, int language_code)
 
 	for (idx = 0; read_a_utf8_word(upu, word, &idx) == 0;)
 	{
-		if (isCJK_words(word) == 1)
+		if (isCJK_words(word) == 1 || isspaces(word) == 1)
 		{
 			strcat(modify, word);
 		}

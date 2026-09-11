@@ -527,4 +527,5 @@
 0	125	KM	UnitE
 125	126	Slash	<eps>
 126	0	KWh	<eps>
+0	0	IMAX	ratio_suffix
 0

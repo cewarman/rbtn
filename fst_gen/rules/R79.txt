@@ -10,6 +10,7 @@
 0	1	Convenience_store_prefix	<eps>
 0	1	至	<eps>
 0	1	<eps>	<eps>
+1	1	sp_or_tab	<eps>
 1	2	Minus	<eps>
 1	2	Plus	<eps>
 1	2	<eps>	<eps>

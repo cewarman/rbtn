@@ -4,4 +4,12 @@
 2	3	Dot	<eps>
 3	4	CH_Number	<eps>
 4	999	<eps>	<eps>
+0	10	於	<eps>
+0	10	過	<eps>
+0	10	達	<eps>
+0	10	compare_prefix	<eps>
+10	10	sp_or_tab	<eps>
+10	11	ridiculous_Vids_year	<eps>
+11	11	sp_or_tab	<eps>
+11	999	年	R66
 999

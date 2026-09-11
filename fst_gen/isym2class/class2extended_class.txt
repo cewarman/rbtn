@@ -2308,4 +2308,10 @@
 1538	1539	Number	<eps>
 1539	1539	Number	<eps>
 1539	0	<LOOKAHEAD_NAN>	<eps>
+0   1540    <LOOKBACK_NAE>	IMAX
+1540	1541	i	<eps>
+1541	1542	m	<eps>
+1542	1543	a	<eps>
+1543	1544	x	<eps>
+1544	0	<LOOKAHEAD_NAE>	<eps>
 0
