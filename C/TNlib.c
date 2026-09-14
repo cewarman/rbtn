@@ -10835,7 +10835,7 @@ int isym2istatecomparefun(const void *a, const void *b)
 }
 void NPMMDP(char *num_in, char *modify, int language_code)
 {
-	int i, idx, dao_flag = 0;
+	int i, idx;
 	char word[7];
 	char *token1 = (char *)malloc((strlen(num_in) + 1) * sizeof(char));
 	char *token2 = (char *)malloc((strlen(num_in) + 1) * sizeof(char));
@@ -10881,7 +10881,6 @@ void NPMMDP(char *num_in, char *modify, int language_code)
 	strcat(modify, interval);
 	strcat(modify, ch_percent);
 	DPTSFW(token2, &modify[strlen(modify)], language_code);
-	if (dao_flag == 1)
 
 	free(token1);
 	free(token2);
