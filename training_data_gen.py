@@ -11,6 +11,7 @@ HYPHEN_YEAR="HYPHEN_YEAR"
 HYPHEN_MONTH="HYPHEN_MONTH"
 HYPHEN_DAY="HYPHEN_DAY"
 HYPHEN_RATIO="HYPHEN_RATIO"
+HYPHEN_BRANCH="HYPHEN_BRANCH"
 SLASH_PER="SLASH_PER"
 SLASH_OR="SLASH_OR"
 SLASH_FRACTION="SLASH_FRACTION"
@@ -40,6 +41,8 @@ EMAIL="EMAIL"
 TWO_AS_TO="TWO_AS_TO"
 CIRCUMFLEX_EXPONENTIATION='CIRCUMFLEX_EXPONENTIATION'
 CIRCUMFLEX_IGNORE='CIRCUMFLEX_IGNORE'
+GREATERSIGN_GREATER='GREATERSIGN_GREATER'
+GREATERSIGN_IGNORE='GREATERSIGN_IGNORE'
 NUMERALS=['0','1','2','3','4','5','6','7','8','9','０','１','２','３','４','５','６','７','８','９']
 SLASHS=['/','∕','╱','／']
 HYPHENS=['-','－','—','─','–']
@@ -49,6 +52,7 @@ TILDES=['～','~']
 COLONS=[':','：','︰','﹕']
 NUMERICAL_TOKEN=['十','百','千','萬','億','兆']
 CIRCUMFLEXS=['^']
+GREATERSIGNS=['>','＞','﹥']
 def has_NUMERALS(line):
 	for tok in line:
 		if(NUMERALS.count(tok)>0):
@@ -1045,6 +1049,116 @@ def R111_trans(output_crf_format_data,rule,sidx,eidx,region):
 		if(CIRCUMFLEXS.count(rule[3][i])>0):
 			add_class(output_crf_format_data,(sidx+i,sidx+i),CIRCUMFLEX_EXPONENTIATION)
 	#return
+def R112_trans(output_crf_format_data,rule,sidx,eidx,region):
+	for i in range(len(region)):
+		if(POINTS.count(rule[3][region[i][0]-1])>0):
+			add_class(output_crf_format_data,(sidx+region[i][0]-1,sidx+region[i][0]-1),POINT_POINT)
+			add_class(output_crf_format_data,(sidx+region[i][0],sidx+region[i][1]),DIGIT)
+		else:
+			add_class(output_crf_format_data,(sidx+region[i][0],sidx+region[i][1]),CARDINAL)
+	for i in range(len(rule[3])):
+		if(PLUSES.count(rule[3][i])>0):
+			add_class(output_crf_format_data,(sidx+i,sidx+i),PLUS_ADD)
+def R113_trans(output_crf_format_data,rule,sidx,eidx,region):
+	for i in range(len(region)):
+		add_class(output_crf_format_data,(sidx+region[i][0],sidx+region[i][1]),CARDINAL)
+	for i in range(len(rule[3])):
+		if(HYPHENS.count(rule[3][i])>0):
+			add_class(output_crf_format_data,(sidx+i,sidx+i),HYPHEN_BRANCH)
+def R114_trans(output_crf_format_data,rule,sidx,eidx,region):
+	for i in range(len(region)):
+		add_class(output_crf_format_data,(sidx+region[i][0],sidx+region[i][1]),CARDINAL)
+	for i in range(len(rule[3])):
+		if(HYPHENS.count(rule[3][i])>0):
+			add_class(output_crf_format_data,(sidx+i,sidx+i),HYPHEN_BRANCH)
+def R115_trans(output_crf_format_data,rule,sidx,eidx,region):
+	for i in range(len(rule[3])):
+		if(SLASHS.count(rule[3][i])>0):
+			add_class(output_crf_format_data,(sidx+i,sidx+i),SLASH_PER)
+def R116_trans(output_crf_format_data,rule,sidx,eidx,region):
+	for i in range(len(region)):
+		add_class(output_crf_format_data,(sidx+region[i][0],sidx+region[i][1]),CARDINAL)
+	for i in range(len(rule[3])):
+		if(HYPHENS.count(rule[3][i])>0):
+			add_class(output_crf_format_data,(sidx+i,sidx+i),HYPHEN_RANGE)
+		if(COLONS.count(rule[3][i])>0):
+			add_class(output_crf_format_data,(sidx+i,sidx+i),COLON_HOUR)
+def R117_trans(output_crf_format_data,rule,sidx,eidx,region):
+	for i in range(len(region)):
+		add_class(output_crf_format_data,(sidx+region[i][0],sidx+region[i][1]),CARDINAL)
+	for i in range(len(rule[3])):
+		if(COLONS.count(rule[3][i])>0):
+			add_class(output_crf_format_data,(sidx+i,sidx+i),COLON_MINUTE)
+			for j in range(i+1, len(rule[3])):
+				if(COLONS.count(rule[3][i])>0):
+					add_class(output_crf_format_data,(sidx+i,sidx+i),COLON_IGNORE)
+					break
+			break
+def R118_trans(output_crf_format_data,rule,sidx,eidx,region):
+	for i in range(len(region)):
+		if(POINTS.count(rule[3][region[i][0]-1])>0):
+			add_class(output_crf_format_data,(sidx+region[i][0]-1,sidx+region[i][0]-1),POINT_POINT)
+			add_class(output_crf_format_data,(sidx+region[i][0],sidx+region[i][1]),DIGIT)
+		else:
+			add_class(output_crf_format_data,(sidx+region[i][0],sidx+region[i][1]),CARDINAL)
+	for i in range(len(rule[3])):
+		if(HYPHENS.count(rule[3][i])>0):
+			if("減" in rule[6] or "minus" in rule[6]):
+				add_class(output_crf_format_data,(sidx+i,sidx+i),HYPHEN_MINUS)
+			else:
+				add_class(output_crf_format_data,(sidx+i,sidx+i),HYPHEN_RANGE)
+	if(rule[6][0]=="七" and rule[6][2:]=='一一'):
+		add_class(output_crf_format_data,(sidx+region[0][0],sidx+region[0][1]),DIGIT)
+		add_class(output_crf_format_data,(sidx+region[1][0],sidx+region[1][1]),DIGIT)
+	elif(rule[6][0]=="七" and (rule[6][1]=="三" or rule[6][1]=="四" or rule[6][1]=="五" or rule[6][1]=="六" or rule[6][1]=="七" or rule[6][1]=="八") and rule[6][2]=="七"):
+		add_class(output_crf_format_data,(sidx+region[0][0],sidx+region[0][1]),DIGIT)
+		if(has_numerical_token(rule[6])==False):
+			add_class(output_crf_format_data,(sidx+region[1][0],sidx+region[1][1]),DIGIT)
+		else:
+			add_class(output_crf_format_data,(sidx+region[1][0],sidx+region[1][1]),CARDINAL)
+def R119_trans(output_crf_format_data,rule,sidx,eidx,region):
+	if(has_numerical_token(rule[6])==False and region[0][1]-region[0][0]>0):
+		add_class(output_crf_format_data,(sidx+region[0][0],sidx+region[0][1]),DIGIT)
+	else:
+		add_class(output_crf_format_data,(sidx+region[0][0],sidx+region[0][1]),CARDINAL)
+def R120_trans(output_crf_format_data,rule,sidx,eidx,region):
+	for i in range(len(region)):
+		if(POINTS.count(rule[3][region[i][0]-1])>0):
+			add_class(output_crf_format_data,(sidx+region[i][0]-1,sidx+region[i][0]-1),POINT_POINT)
+			add_class(output_crf_format_data,(sidx+region[i][0],sidx+region[i][1]),DIGIT)
+		else:
+			add_class(output_crf_format_data,(sidx+region[i][0],sidx+region[i][1]),CARDINAL)
+	for i in range(len(rule[3])):
+		if(HYPHENS.count(rule[3][i])>0):
+			add_class(output_crf_format_data,(sidx+i,sidx+i),HYPHEN_NEGATIVE)
+		elif(PLUSES.count(rule[3][i])>0):
+			add_class(output_crf_format_data,(sidx+i,sidx+i),PLUS_POSITIVE)
+def R120_trans(output_crf_format_data,rule,sidx,eidx,region):
+	for i in range(len(rule[3])):
+		if(PLUSES.count(rule[3][i])>0):
+			add_class(output_crf_format_data,(sidx+i,sidx+i),PLUS_POSITIVE)
+def R121_trans(output_crf_format_data,rule,sidx,eidx,region):
+	for i in range(len(rule[3])):
+		if(GREATERSIGNS.count(rule[3][i])>0):
+			add_class(output_crf_format_data,(sidx+i,sidx+i),GREATERSIGN_GREATER)
+def R122_trans(output_crf_format_data,rule,sidx,eidx,region):
+	for i in range(len(region)):
+		if(POINTS.count(rule[3][region[i][0]-1])>0):
+			add_class(output_crf_format_data,(sidx+region[i][0]-1,sidx+region[i][0]-1),POINT_POINT)
+			add_class(output_crf_format_data,(sidx+region[i][0],sidx+region[i][1]),DIGIT)
+		else:
+			add_class(output_crf_format_data,(sidx+region[i][0],sidx+region[i][1]),CARDINAL)
+	for i in range(len(rule[3])):
+		if(HYPHENS.count(rule[3][i])>0):
+			if("減" in rule[6] or "minus" in rule[6]):
+				add_class(output_crf_format_data,(sidx+i,sidx+i),HYPHEN_MINUS)
+			else:
+				add_class(output_crf_format_data,(sidx+i,sidx+i),HYPHEN_RANGE)
+def R123_trans(output_crf_format_data,rule,sidx,eidx,region):
+	return
+def R124_trans(output_crf_format_data,rule,sidx,eidx,region):
+	for i in range(len(region)):
+		add_class(output_crf_format_data,(sidx+region[i][0],sidx+region[i][1]),DIGIT)
 
 def rules2crfoutput(output_crf_format_data,rules):
 	for i in range(len(rules)):
@@ -1277,6 +1391,32 @@ def rules2crfoutput(output_crf_format_data,rules):
 			R110_trans(output_crf_format_data,rules[i],sidx,eidx,region)
 		elif(rules[i][4]=='R111'):
 			R111_trans(output_crf_format_data,rules[i],sidx,eidx,region)
+		elif(rules[i][4]=='R112'):
+			R111_trans(output_crf_format_data,rules[i],sidx,eidx,region)
+		elif(rules[i][4]=='R113'):
+			R111_trans(output_crf_format_data,rules[i],sidx,eidx,region)
+		elif(rules[i][4]=='R114'):
+			R111_trans(output_crf_format_data,rules[i],sidx,eidx,region)
+		elif(rules[i][4]=='R115'):
+			R111_trans(output_crf_format_data,rules[i],sidx,eidx,region)
+		elif(rules[i][4]=='R116'):
+			R111_trans(output_crf_format_data,rules[i],sidx,eidx,region)
+		elif(rules[i][4]=='R117'):
+			R111_trans(output_crf_format_data,rules[i],sidx,eidx,region)
+		elif(rules[i][4]=='R118'):
+			R111_trans(output_crf_format_data,rules[i],sidx,eidx,region)
+		elif(rules[i][4]=='R119'):
+			R111_trans(output_crf_format_data,rules[i],sidx,eidx,region)
+		elif(rules[i][4]=='R120'):
+			R111_trans(output_crf_format_data,rules[i],sidx,eidx,region)
+		elif(rules[i][4]=='R121'):
+			R111_trans(output_crf_format_data,rules[i],sidx,eidx,region)
+		elif(rules[i][4]=='R122'):
+			R111_trans(output_crf_format_data,rules[i],sidx,eidx,region)
+		elif(rules[i][4]=='R123'):
+			R111_trans(output_crf_format_data,rules[i],sidx,eidx,region)
+		elif(rules[i][4]=='R124'):
+			R111_trans(output_crf_format_data,rules[i],sidx,eidx,region)
 
 
 
@@ -1288,8 +1428,18 @@ if(len(sys.argv)!=2):
 
 NSWMs=[]
 with open(sys.argv[1],'r',encoding='utf8') as f:
-	raw_nswms=[line.strip('\n') for line in f.readlines()]
-	raw_nswms=raw_nswms[:len(raw_nswms)-1]
+	rawt=f.readlines()
+	raw_nswms=[]
+	for i in range(len(rawt)):
+		if(rawt[i].count('\t')==7):
+			raw_nswms.append(rawt[i][:-1])
+		else:
+			if(i==0):
+				raw_nswms.append(rawt[i])
+			else:
+				raw_nswms[-1]=raw_nswms[-1]+rawt[i]
+	#raw_nswms=[line.strip('\n') for line in f.readlines()]
+	#raw_nswms=raw_nswms[:len(raw_nswms)-1]
 	row_idx=0
 	while row_idx<len(raw_nswms):
 		row=raw_nswms[row_idx]
@@ -1322,6 +1472,8 @@ def patch2crfoutput(output_crf_format_data,rawline,rules):
 			output_crf_format_data[i]='S-'+COLON_IGNORE
 		elif(CIRCUMFLEXS.count(rawline[i])>0 and output_crf_format_data[i]=='O'):
 			output_crf_format_data[i]='S-'+CIRCUMFLEX_IGNORE
+		elif(GREATERSIGNS.count(rawline[i])>0 and output_crf_format_data[i]=='O'):
+			output_crf_format_data[i]='S-'+GREATERSIGN_IGNORE
 	for i in range(len(rules)):
 		sidx=int(rules[i][1])
 		eidx=int(rules[i][2])-1

@@ -555,6 +555,7 @@ FN_MAP fn_map[] = {
 	{"NFNLT3", NFNLT3},
 	{"NUDLOP", NUDLOP},
 	{"CNWAAN", CNWAAN},
+	{"NPMMDP", NPMMDP},
 	
 };
 int isTmp_symC(char *word)
@@ -10831,4 +10832,57 @@ int isym2istatecomparefun(const void *a, const void *b)
 	const char *pa = ((ISYM2ISTATE *)a)->input;
 	const char *pb = ((ISYM2ISTATE *)b)->input;
 	return strcmp(pa, pb);
+}
+void NPMMDP(char *num_in, char *modify, int language_code)
+{
+	int i, idx, dao_flag = 0;
+	char word[7];
+	char *token1 = (char *)malloc((strlen(num_in) + 1) * sizeof(char));
+	char *token2 = (char *)malloc((strlen(num_in) + 1) * sizeof(char));
+	char interval[7];
+
+	for (idx = 0; read_a_utf8_word(num_in, word, &idx) == 0;)
+	{
+		if (isCJK_words(word) == 1 || isspaces(word) == 1)
+		{
+			strcat(modify, word);
+		}
+		else
+		{
+			Retreat_a_utf8_word(num_in, &idx);
+			break;
+		}
+	}
+	for (token1[0] = '\0'; read_a_utf8_word(num_in, word, &idx) == 0;)
+	{
+		if (isNumber(word) == 1 || isComma(word) == 1 || isDot(word) == 1)
+		{
+			strcat(token1, word);
+		}
+		else
+		{
+			Retreat_a_utf8_word(num_in, &idx);
+			break;
+		}
+	}
+	for (token2[0] = '\0'; read_a_utf8_word(num_in, word, &idx) == 0;)
+	{
+		if (isCJK_words(word) == 1)
+		{
+			strcpy(interval, word);
+		}
+		if (isNumber(word) == 1 || isComma(word) == 1 || isDot(word) == 1)
+		{
+			strcat(token2, word);
+		}
+	}
+	
+	DPTSFW(token1, &modify[strlen(modify)], language_code);
+	strcat(modify, interval);
+	strcat(modify, ch_percent);
+	DPTSFW(token2, &modify[strlen(modify)], language_code);
+	if (dao_flag == 1)
+
+	free(token1);
+	free(token2);
 }

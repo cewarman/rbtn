@@ -817,4 +817,7 @@
 	~c R124 on	4	0	#0開頭英文字母結尾 i.e. 他列00981A僅漲0.71％ 網酸
 		~k N2IWND
 	
+	~c	R125	on	16	0	#數字加百分比數  i.e. 45加2%
+		~k	NPMMDP
+
 ~e #end_of_transformation

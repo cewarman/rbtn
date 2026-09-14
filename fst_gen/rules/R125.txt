@@ -1,0 +1,9 @@
+0	500	Numerical_format_sequence	R125
+0	500	countinous_Number	R125
+500	500	sp_or_tab	<eps>
+500	501	Elementary_arithmetic	<eps>
+501	501	sp_or_tab	<eps>
+501	502	Numerical_format_sequence	<eps>
+501	502	countinous_Number	<eps>
+502	999	Percentage	<eps>
+999

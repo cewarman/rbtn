@@ -412,6 +412,7 @@ void NFSNFS(char *num_in, char *modify, int language_code);						// Numerical_fo
 void NFNLT3(char *num_in, char *modify, int language_code);						// numerical for Numerals less than 3 times ; shortest first for others
 void NUDLOP(char *num_in, char *modify, int language_code);						// Numerical_format_sequence/continuous_number unit dash loop i.e. 2,000萬元-1,200萬元-6萬元-2.85萬元
 void CNWAAN(char *num_in, char *modify, int language_code);						// Chinese Numerals written as Arabic numerals
+void NPMMDP(char *num_in, char *modify, int language_code);						// Numerals plus/minus/multiple/divide precentage
 
 /*add from shoawei's RBTN version 1090429*/
 void NWDSFW(char *num_in, char *DPSPW);											// numerals_with_date_word_to_spoken_form_word
