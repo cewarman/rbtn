@@ -7913,7 +7913,7 @@ void N2SSTF_LD(char *num_in, char *DPSPW, int language_code)
 		N2SWND(num_in, &(DPSPW[strlen(DPSPW)]), language_code);
 		flag = 1;
 	}
-	if (language_code == 2)
+	if (language_code == 2 && flag == 0) /* a special case above already produced the reading */
 	{
 		NEIWND(num_in, DPSPW, language_code);
 		flag = 1;
