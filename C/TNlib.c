@@ -6775,7 +6775,7 @@ void ECCWPS(char *raw, char *modify, int language_code)
 void ABOYTY(char *raw, char *modify, int language_code)
 {
 	int i, idx, csize;
-	char word[7], year1[25], year2[25];
+	char word[7], year1[25], year2[25], rollover[16];
 	char *temp;
 
 	for (idx = 0, year1[0] = '\0'; read_a_utf8_word(raw, word, &idx) == 0;)
@@ -6824,18 +6824,50 @@ void ABOYTY(char *raw, char *modify, int language_code)
 	}
 	// printf("HERE:%s %s\n", &year1[idx], year2);
 	// printf("HERE:%d %d\n", myatoi(&year1[idx]), myatoi(year2));
+	rollover[0] = '\0';
 	if (myatoi(&year1[idx]) > myatoi(year2))
 	{
-		strcpy(modify, raw);
-		return;
+		/* e.g. 1999-00: a two-digit second year that follows the tail of the
+		   first year means the century rolled over -> 1999-2000 */
+		if (csize == 2 && utf8_word_length(year1) == 4 && (myatoi(&year1[idx]) + 1) % 100 == myatoi(year2))
+		{
+			sprintf(rollover, "%d", myatoi(year1) - myatoi(&year1[idx]) + 100 + myatoi(year2));
+		}
+		else
+		{
+			strcpy(modify, raw);
+			return;
+		}
 	}
 
-	temp = (char *)malloc((strlen(raw) + 8) * sizeof(char));
+	temp = (char *)malloc((strlen(raw) + 16) * sizeof(char));
 	for (idx = 0, temp[0] = '\0'; read_a_utf8_word(raw, word, &idx) == 0;)
 	{
 		if (isDash(word) == 1 || isTilde(word) == 1)
 		{
 			strcat(temp, ch_dao);
+			if (rollover[0] != '\0')
+			{
+				/* skip the original two-digit year and emit the full year instead */
+				for (; read_a_utf8_word(raw, word, &idx) == 0;)
+				{
+					if (isNumber(word) == 1)
+					{
+						break;
+					}
+					strcat(temp, word);
+				}
+				for (; read_a_utf8_word(raw, word, &idx) == 0 && isNumber(word) == 1;)
+				{
+				}
+				strcat(temp, rollover);
+				if (word[0] != '\0')
+				{
+					Retreat_a_utf8_word(raw, &idx);
+				}
+				strcat(temp, &raw[idx]);
+				break;
+			}
 			strcat(temp, &raw[idx]);
 			break;
 		}
