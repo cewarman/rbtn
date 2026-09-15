@@ -6674,6 +6674,21 @@ void CMFSFW(char *raw, char *modify, int language_code)
 				strcat(modify, "equal ");
 			}
 		}
+		else if (isPercentage(word) == 1)
+		{
+			/* 999+10% -> 九百九十九加百分之十 */
+			if (language_code == 1)
+			{
+				strcat(modify, ch_percent);
+				N2SWND(temp, &modify[strlen(modify)], language_code);
+			}
+			else
+			{
+				N2SWND(temp, &modify[strlen(modify)], language_code);
+				strcat(modify, "percent ");
+			}
+			temp[0] = '\0';
+		}
 		else if (isCJK_words(word) == 1)
 		{
 			N2SWND(temp, &modify[strlen(modify)], language_code);
