@@ -5254,7 +5254,10 @@ void URLNOR(char *URL, char *nor_url, int language_code)
 {
 	int i, idx, ret, abyte_idx, abyte_capacity;
 	char word[7], **abyte, twobyteutf8[3];
-	char *temp = (char *)malloc((strlen(URL) + 1) * sizeof(char));
+	/* BYTRAN may expand every "%XY" (3 bytes) into 趴 + two Chinese digits (9 bytes),
+	   so temp must be several times the URL length or long percent-encoded URLs
+	   overflow the heap (crashed on e.g. grinews.com/news/%e7%a7%91...). */
+	char *temp = (char *)malloc((strlen(URL) * 4 + 16) * sizeof(char));
 
 	abyte_capacity = ((int)(strlen(URL) / 3) + 1);
 	abyte = (char **)malloc(abyte_capacity * sizeof(char *));
@@ -5458,6 +5461,10 @@ int get_heximal_val(char *word)
 		{
 			return word[0] - 55;
 		}
+		else if (word[0] >= 97 && word[0] <= 102) /* lowercase %e7 style */
+		{
+			return word[0] - 87;
+		}
 	}
 	else if (len == 3)
 	{
@@ -5482,7 +5489,7 @@ int isheximalC(char *word)
 
 	if (len == 1)
 	{
-		if ((word[0] >= 48 && word[0] <= 57) || (word[0] >= 65 && word[0] <= 70))
+		if ((word[0] >= 48 && word[0] <= 57) || (word[0] >= 65 && word[0] <= 70) || (word[0] >= 97 && word[0] <= 102))
 		{
 			return 1;
 		}
