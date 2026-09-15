@@ -4869,10 +4869,10 @@ void TADSRB(char *num_in, char *DPSPW, int language_code)
 			Retreat_a_utf8_word(temp[0], &tidx);
 			strcpy(opt_tmp, &temp[0][tidx]);
 			temp[0][tidx] = '\0';
-			remove_space(temp[0]);
 			break;
 		}
 	}
+	remove_space(temp[0]); /* "0 到 100 km": a trailing space made "0 " read as nothing */
 	// printf("%s\n", &(num_in[idx]));
 	//for (temp[1][0] = '\0'; read_a_utf8_word(num_in, word, &idx) == 0;)
 	//{
@@ -4931,7 +4931,14 @@ void TADSRB(char *num_in, char *DPSPW, int language_code)
 	}
 	else if ((strncmp(temp[1], "2", 1) == 0 || strncmp(temp[1], Number[12], 3) == 0) && utf8_word_length(temp[1]) == 1)
 	{
-		STFNVI(temp[0], &(DPSPW[strlen(DPSPW)]));
+		if (has_dot(temp[0]) == 1)
+		{
+			DPTSFW(temp[0], &(DPSPW[strlen(DPSPW)]), 1); /* 1.5~2萬 -> 一點五到兩萬, not 一五到兩萬 */
+		}
+		else
+		{
+			STFNVI(temp[0], &(DPSPW[strlen(DPSPW)]));
+		}
 		strcat(DPSPW, opt_tmp);
 		if (patch_dao == 1)
 		{
