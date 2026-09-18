@@ -345,6 +345,7 @@ void COMPRO(char *num_in, char *PRO, int language_code);						// communication p
 void NTONPG(char *num_in, char *PER, int language_code);						// number to number % e.g.10-20%
 void STFNVI(char *num_in, char *RES);											// short type first, Numerical vs individually
 void SFWFSC(char *num_in, char *RES, int language_code);						// Spoken form word for stock code
+void SCDSFW(char *num_in, char *RAT, int language_code);						// scores written with dash/slash -> 比
 void RSFWTF(char *num_in, char *RAT, int language_code);						// ratio spoken-form words with not digital input
 void FSFWTF(char *num_in, char *FRA, int language_code);						// fraction spoken-form words with not digital input
 void HICTU8(char *num_in, char *UTF, int language_code);						// html (ISO-10646;UNicode) to utf-8

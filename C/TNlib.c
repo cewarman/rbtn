@@ -493,6 +493,7 @@ FN_MAP fn_map[] = {
 	{"NTONPG", NTONPG},
 	{"SFWFSC", SFWFSC},
 	{"RSFWTF", RSFWTF},
+	{"SCDSFW", SCDSFW},
 	{"FSFWTF", FSFWTF},
 	{"HICTU8", HICTU8},
 	{"TTFHSF", TTFHSF},
@@ -4632,7 +4633,26 @@ void N2SWND(char *num_in, char *DPSPW, int language_code)
 				}
 				strcat(temp, word);
 			}
-			if (strcmp(last_word, "第") != 0 && (strcmp(temp, "2") == 0 || strcmp(temp, Number[12]) == 0) && isCJK_words(word) == 1 && zh1_flag == 0)
+			if (utf8_word_length(temp) >= 3 && temp[0] == '0' && has_dot(temp) == 0 && has_comma(temp) == 0)
+			{
+				/* leading-zero codes such as 0050 / 00858 are identifiers, never quantities */
+				NTISFW(temp, &(DPSPW[strlen(DPSPW)]), 1);
+				strcat(DPSPW, word);
+			}
+			else if (strcmp(last_word, "第") == 0 && has_dot(temp) == 0)
+			{
+				/* ordinals: 第235條 -> 第二百三十五條 (no 兩) */
+				char *ord_start = &(DPSPW[strlen(DPSPW)]);
+				char *ord_p;
+				NTNSFW(temp, ord_start, 0);
+				for (ord_p = strstr(ord_start, two_for_measure_word); ord_p != NULL; ord_p = strstr(ord_p, two_for_measure_word))
+				{
+					memcpy(ord_p, CH_number[2], strlen(two_for_measure_word));
+				}
+				strcat(DPSPW, word);
+			}
+			else if (strcmp(last_word, "第") != 0 && (strcmp(temp, "2") == 0 || strcmp(temp, Number[12]) == 0) && isCJK_words(word) == 1 && zh1_flag == 0
+				&& strcmp(word, "比") != 0 && strcmp(word, "選") != 0 && strcmp(word, "缺") != 0 && strcmp(word, "搶") != 0)
 			{
 				strcat(temp, word);
 				// printf("%s\n", temp);
@@ -4645,6 +4665,44 @@ void N2SWND(char *num_in, char *DPSPW, int language_code)
 			}
 		}
 		strcpy(last_word, word);
+	}
+
+	free(temp);
+}
+void SCDSFW(char *num_in, char *RAT, int language_code)
+{
+	/* scores written with a dash: 以6-3、3-6、7-6（7/4）獲勝 -> 六比三、三比六、七比六（七比四） */
+	int idx;
+	char word[7];
+	char *temp = (char *)malloc((strlen(num_in) + 1) * sizeof(char));
+
+	for (idx = 0; read_a_utf8_word(num_in, word, &idx) == 0;)
+	{
+		if (isNumber(word) == 0)
+		{
+			strcat(RAT, word);
+			continue;
+		}
+		strcpy(temp, word);
+		word[0] = 0;
+		for (; read_a_utf8_word(num_in, word, &idx) == 0;)
+		{
+			if (isNumber(word) == 0)
+			{
+				break;
+			}
+			strcat(temp, word);
+			word[0] = 0;
+		}
+		DPTSFW(temp, &(RAT[strlen(RAT)]), 1);
+		if (isDash(word) == 1 || isSlash(word) == 1 || isColon(word) == 1)
+		{
+			strcat(RAT, ch_ratio);
+		}
+		else
+		{
+			strcat(RAT, word);
+		}
 	}
 
 	free(temp);
@@ -10020,6 +10078,11 @@ void NFSNFS(char *num_in, char *modify, int language_code)
 				{
 					strcat(modify, " minus ");
 				}
+			}
+			else if (language_code == 1 && utf8_word_length(temp1) <= 2 && utf8_word_length(temp2) <= 2)
+			{
+				/* 7-6, 6-3, 2-2: two short numbers, first not smaller -> a score, read 比 */
+				strcat(modify, ch_ratio);
 			}
 			else
 			{
