@@ -1082,6 +1082,18 @@ unsigned long long int utf8word2decimal(char *word)
 	}
 	return ret;
 }
+/* Drop a carriage return before the line end, so files with CRLF line endings (a Windows checkout
+   used on Linux or macOS) read the same as LF ones. Left in, the \r became part of the last field
+   and no rule or arc matched, without any error. */
+static void remove_trailing_cr(char *line)
+{
+	size_t len = strlen(line);
+
+	if (len > 0 && line[len - 1] == '\n')
+		len--;
+	if (len > 0 && line[len - 1] == '\r')
+		memmove(&line[len - 1], &line[len], strlen(&line[len]) + 1);
+}
 int read_a_line(char **line, int *capacity_of_line, FILE *fin)
 {
 	char temp[1024];
@@ -1121,6 +1133,8 @@ int read_a_line(char **line, int *capacity_of_line, FILE *fin)
 		strcat(*line, temp);
 	}
 	// printf("%s\n", *line);
+
+	remove_trailing_cr(*line);
 
 	return FILEEND;
 }
@@ -10311,6 +10325,7 @@ void readfst(FST *fst, FILE *ffst)
 	for (fst->capacity = 0, fst->num_end = 0; fgets(line, 1023, ffst) != NULL;
 		 fst->capacity++)
 	{
+		remove_trailing_cr(line);
 		if (parser_line(line, istate, ostate, itemp, otemp, wtemp) == 1)
 		{
 			fst->num_end++;
@@ -10327,6 +10342,7 @@ void readfst(FST *fst, FILE *ffst)
 
 	for (temp_regular_input_size = fst->size = 0, i = 0; fgets(line, 1023, ffst) != NULL;)
 	{
+		remove_trailing_cr(line);
 		ret = parser_line(line, istate, ostate, itemp, otemp, wtemp);
 		if (ret == 1)
 		{

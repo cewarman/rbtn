@@ -1,0 +1,2 @@
+# Rule files and the search network must keep LF line endings on every platform.
+*.txt text eol=lf

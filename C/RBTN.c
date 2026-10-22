@@ -7,7 +7,7 @@ FST pypifst;
 RULES pypirul;
 FLAGS pypiflags;
 
-void pypiloadrules(char *rules_config_path, char *fst_path);
+int pypiloadrules(char *rules_config_path, char *fst_path);
 void pypiconversion(char **intext, char *output, char *nswmsinfo);
 void pypifill_non_standard_word_marks(char *pypinswms, char *line, NSW_TOKEN *nsw);
 void pypilineconversion(FST *fst, TEXT *text_in, TEXT *text_out, FLAGS *flags, TRANSFORMATION *tra, char *nswmsinfo);
@@ -607,18 +607,24 @@ void output_non_standard_word_marks(FILE *fnswm, char *line, NSW_TOKEN *nsw)
 		fprintf(fnswm, "\t%d∥\t%d∥\t%d∥\t%s∥\t%s∥\t%d∥\t%s\n", i + 1, start_idx_utf8_form, end_idx_utf8_form, nsw->token[i], nsw->rule[i], nsw->language[i], nsw->SFW[i]);
 	}
 }
-void pypiloadrules(char *rules_config_path, char *fst_path){
+/* Returns 0 on success. It used to call exit(1) when a file was missing, which ended the whole
+   Python process; now the caller (cetn.py) gets an error code and raises an exception:
+     -1  cannot open rules_config
+     -2  cannot open search_network (CRR_Final.txt)
+     -3  the files opened but no rules or search network came out of them */
+int pypiloadrules(char *rules_config_path, char *fst_path){
 	FILE *frul, *ffst;
 
 	if (!(frul = fopen(rules_config_path, "r")))
 	{
-		printf("can not open rules_config\n");
-		exit(1);
+		fprintf(stderr, "can not open rules_config\n");
+		return -1;
 	}
 	if (!(ffst = fopen(fst_path, "r")))
 	{
-		printf("can not open search_network\n");
-		exit(1);
+		fprintf(stderr, "can not open search_network\n");
+		fclose(frul);
+		return -2;
 	}
 	
 	//set_fst(&pypifst);
@@ -627,6 +633,13 @@ void pypiloadrules(char *rules_config_path, char *fst_path){
 
 	fclose(ffst);
 	fclose(frul);
+
+	if (pypifst.size == 0 || pypirul.tra.size == 0)
+	{
+		fprintf(stderr, "no rules or search network loaded\n");
+		return -3;
+	}
+	return 0;
 }
 void pypiconversion(char **intext, char *output, char *nswmsinfo){
 	TEXT text_in, text_tmp, text_out;
