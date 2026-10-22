@@ -4658,7 +4658,7 @@ void TTFHSF(char *num_in, char *TTF, int language_code)
 }
 void HICTU8(char *num_in, char *UTF, int language_code)
 {
-	strcpy(UTF, html2utf8(num_in));
+	html2utf8(num_in, UTF);
 }
 void FSFWTF(char *num_in, char *FRA, int language_code)
 {
@@ -6137,11 +6137,13 @@ void SFWFSC(char *num_in, char *RES, int language_code)
 
 	free(temp);
 }
-char *html2utf8(char *hcode)
+/* The result goes into out, which the caller provides (at least strlen(hcode) + 1 bytes, and at
+   least 5). It used to be a static buffer, which two threads converting at once overwrote. */
+void html2utf8(char *hcode, char *out)
 {
 	char *nor_hcode = (char *)malloc((strlen(hcode) + 1) * sizeof(char));
 	int i, idx;
-	static char word[7];
+	char word[7];
 	int unicode_value = 0;
 	static int unicode_range[4][2] = {{0, 127}, {128, 2047}, {2048, 65535}, {65536, 1114111}};
 	static int unicode_len[4] = {7, 11, 16, 21};
@@ -6217,13 +6219,14 @@ char *html2utf8(char *hcode)
 		// printf("%s out of unicode range.\n", hcode);
 		free(nor_hcode);
 		// exit(1);
-		return hcode;
+		strcpy(out, hcode);
+		return;
 	}
 	// printf("%d %d %d %s\n", word[0], word[1], word[2], word);
 	// printf("%d %d %d %d\n", utf8_prefix[0], utf8_prefix[1], utf8_prefix[2], utf8_prefix[3]);
 
 	free(nor_hcode);
-	return word;
+	strcpy(out, word);
 }
 char *retdaynum()
 {
