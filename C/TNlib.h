@@ -468,7 +468,7 @@ int stringlengthcomparefun(const void *a, const void *b);
 int get_heximal_val(char *word);
 char *get_ch_Number(char *word);
 char *get_eng_Number(char *word);
-char *html2utf8(char *hcode);
+void html2utf8(char *hcode, char *out);
 char *retdaynum();
 int decide_language(char *line, NSW_TOKEN *nsw);
 int decide_language_by_sentence(char *line, NSW_TOKEN *nsw);
