@@ -16,7 +16,9 @@ class textnormalizer:
         search_network_path = os.path.join(base_dir, "CRR_Final.txt")
                 #print(so_path, rules_config_path)
         self.lib = CDLL(lib_path)
-        self.lib.pypiloadrules(rules_config_path.encode('utf-8'), search_network_path.encode('utf-8'))
+        ret = self.lib.pypiloadrules(rules_config_path.encode('utf-8'), search_network_path.encode('utf-8'))
+        if ret != 0:
+            raise RuntimeError('rbtn: could not load {} and {} (error {})'.format(rules_config_path, search_network_path, ret))
 
     def get_normalized_text(self, raw_txt):
         ret_list=[]
