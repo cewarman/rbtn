@@ -86,8 +86,6 @@ void run(FILE *frul, /* FILE *flpe,*/ FILE *fin, FILE *fout, FILE *fnswm)
 	FILE *ffst;
 	int i, j, k;
 
-	srand(time(NULL));
-
 	if (!(ffst = fopen("CRR_Final.txt", "r")))
 	{
 		printf("can not open search_network\n");
@@ -162,6 +160,7 @@ void fill_text_out(char *sentence_in, char **sentence_out, int raw, NSW_TOKEN *n
 	char *tok = (char *)malloc(sizeof(char));
 	char word[7];
 
+	seed_reading_variants(sentence_in);
 	out_len = strlen(sentence_in);
 	*sentence_out = (char *)malloc((strlen(sentence_in) + 1) * sizeof(char));
 	(*sentence_out)[0] = '\0';

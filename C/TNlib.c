@@ -6225,9 +6225,45 @@ char *html2utf8(char *hcode)
 	free(nor_hcode);
 	return word;
 }
+/* Reading variants: a date is read with 日 or 號, a weekday with 星期 or 禮拜, on purpose.
+   The choice used to come from rand(), so the same sentence could be read differently depending
+   on what had been converted before it in the process, on the platform's rand(), and (in the
+   command-line program, which called srand(time(NULL))) on the run. Now every sentence seeds its
+   own generator from its text (seed_reading_variants, called from fill_text_out): the same
+   sentence is always read the same way, different sentences still vary, and the state is per
+   thread, so threads do not disturb each other. */
+#if defined(_MSC_VER)
+#define RBTN_THREAD_LOCAL __declspec(thread)
+#else
+#define RBTN_THREAD_LOCAL __thread
+#endif
+static RBTN_THREAD_LOCAL unsigned int reading_variant_state = 2463534242u;
+
+void seed_reading_variants(const char *sentence)
+{
+	unsigned int h = 2166136261u; /* FNV-1a */
+	const unsigned char *p;
+
+	for (p = (const unsigned char *)sentence; *p; p++)
+	{
+		h ^= *p;
+		h *= 16777619u;
+	}
+	reading_variant_state = h ? h : 2463534242u;
+}
+static int next_reading_variant(void)
+{
+	unsigned int x = reading_variant_state; /* xorshift32 */
+
+	x ^= x << 13;
+	x ^= x >> 17;
+	x ^= x << 5;
+	reading_variant_state = x;
+	return (x >> 16) & 1;
+}
 char *retdaynum()
 {
-	int val = rand() % 2;
+	int val = next_reading_variant();
 
 	if (val == 0)
 	{
@@ -7416,7 +7452,7 @@ void add_day_suffix(char *in, char *out)
 {
 	int idx, ret;
 	char word[7];
-	int val = rand() % 2;
+	int val = next_reading_variant();
 
 	for (idx = 0; read_a_utf8_word(in, word, &idx) == 0;)
 	{
