@@ -34,7 +34,8 @@ jobs:
           CIBW_BEFORE_BUILD_WINDOWS: >
             call "C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Auxiliary\Build\vcvars64.bat" &&
             where cl &&
-            cl /LD /O2 C\RBTN.c C\TNlib.c /Fe:src\rbtn\pypiRBTN.dll &&
+            cl /utf-8 /LD /O2 C\RBTN.c C\TNlib.c /Fe:src\rbtn\pypiRBTN.dll
+            /link /EXPORT:pypiloadrules /EXPORT:pypiconversion &&
             dir src\rbtn\pypiRBTN.dll
 
           CIBW_BEFORE_BUILD_MACOS: >
