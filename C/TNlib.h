@@ -483,6 +483,7 @@ void initial_viterbi_info(FST *fst, VITERBIINFO *vinfo);
 void destroy_viterbi_info(VITERBIINFO *vinfo);
 int myatoi(char *sa);
 float myatof(char *sa);
+void seed_reading_variants(const char *sentence);
 void add_day_suffix(char *in, char *out);
 int country_name_idx(char *name);
 void normalize_alphabet_to_ascii(char *raw, char *modify, int capital_flag);
