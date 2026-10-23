@@ -9051,59 +9051,52 @@ void N2SCAC(char *num_in, char *modify, int language_code)
 }
 int is_utf8_string(char *line)
 {
-	int index = strlen(line);
+	/* 從字串尾端往前,一次檢查一個 UTF-8 字元(1–6 bytes)。
+	 *
+	 * 以 unsigned char 判斷:原本用有號 char 比大小,在 char 為無號型別的平台(ARM 等)上
+	 * 永遠判定為合法;而且往前找起始位元組時沒有檢查邊界,字串開頭是不完整的多位元組
+	 * 字元時(例如 URL 裡的 %ef 解碼成單一 0xEF)會讀到 line[-1](heap 越界讀取)。
+	 * 判定規則與原本相同:起始位元組 C0–DF / E0–EF / F0–F7 / F8–FB / FC–FD 對應 2–6 bytes,
+	 * 後續位元組必須是 80–BF;結尾的單一位元組 01–7F 是 ASCII。不足一個完整字元 → 0。
+	 */
+	const unsigned char *s = (const unsigned char *)line;
+	int index = (int)strlen(line);
+	static const unsigned char lead_lo[7] = {0, 0, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC};
+	static const unsigned char lead_hi[7] = {0, 0, 0xDF, 0xEF, 0xF7, 0xFB, 0xFD};
 
 	while (index > 0)
 	{
-		if (index < 0)
+		int len, k, matched = 0;
+
+		if (s[index - 1] >= 0x01 && s[index - 1] <= 0x7F)
 		{
-			return 0;
+			index -= 1;
+			continue;
 		}
-		if (line[index - 1] > 0)
+		for (len = 2; len <= 6; len++)
 		{
-			(index) -= 1;
-		}
-		else if (line[index - 2] >= -64 && line[index - 2] <= -33)
-		{
-			if(line[index - 1] > -65)
+			unsigned char lead;
+
+			if (index - len < 0)
 			{
 				return 0;
 			}
-			(index) -= 2;
-		}
-		else if (line[index - 3] >= -32 && line[index - 3] <= -17)
-		{
-			if(line[index - 2] > -65 || line[index - 1] > -65)
+			lead = s[index - len];
+			if (lead >= lead_lo[len] && lead <= lead_hi[len])
 			{
-				return 0;
+				for (k = index - len + 1; k < index; k++)
+				{
+					if (s[k] < 0x80 || s[k] > 0xBF)
+					{
+						return 0;
+					}
+				}
+				index -= len;
+				matched = 1;
+				break;
 			}
-			(index) -= 3;
 		}
-		else if (line[index - 4] >= -16 && line[index - 4] <= -9)
-		{
-			if(line[index - 3] > -65 || line[index - 2] > -65 || line[index - 1] > -65)
-			{
-				return 0;
-			}
-			(index) -= 4;
-		}
-		else if (line[index - 5] >= -8 && line[index - 5] <= -5)
-		{
-			if(line[index - 4] > -65 || line[index - 3] > -65 || line[index - 2] > -65 || line[index - 1] > -65)
-			{
-				return 0;
-			}
-			(index) -= 5;
-		}
-		else if (line[index - 6] >= -4 && line[index - 6] <= -3)
-		{
-			if(line[index - 5] > -65 || line[index - 4] > -65 || line[index - 3] > -65 || line[index - 2] > -65 || line[index - 1] > -65)
-			{
-				return 0;
-			}
-			index -= 6;
-		}
-		else
+		if (!matched)
 		{
 			return 0;
 		}
