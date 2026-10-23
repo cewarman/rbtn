@@ -26,4 +26,7 @@
 0	40	local_name	R24
 40	41	countinous_Number_without_point	<eps>
 41	999	Unit	<eps>
+0	7	countinous_Number_with_point	R24
+7	7	sp_or_tab	<eps>
+7	999	年	<eps>
 999

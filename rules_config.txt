@@ -820,4 +820,7 @@
 	~c	R125	on	16	0	#數字加百分比數  i.e. 45加2%
 		~k	NPMMDP
 
+	~c	R126	on	16	0	#比數／盤數（連字號） i.e. 以6-3、3-6、7-6（7/4）獲勝、比數3-6
+		~k	SCDSFW
+
 ~e #end_of_transformation

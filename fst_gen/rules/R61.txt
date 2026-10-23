@@ -8,6 +8,7 @@
 2	3	countinous_Number	<eps>
 3	1	<eps>	<eps>
 3	999	<eps>	<eps>
+3	999	Percentage	<eps>
 1	4	arithmetic	<eps>
 4	4	sp_or_tab	<eps>
 4	5	Numerical_format_sequence	<eps>

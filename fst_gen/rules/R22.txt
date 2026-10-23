@@ -1,6 +1,7 @@
 0	1	第	R22
 1	1	sp_or_tab	<eps>
 1	2	countinous_Number	<eps>
+1	2	Numerical_format_sequence	<eps>
 2	999	<eps>	<eps>
 2	3	<eps>	<eps>
 3	3	sp_or_tab	<eps>
